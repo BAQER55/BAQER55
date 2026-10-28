@@ -1,0 +1,1031 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#050619">
+<meta name="color-scheme" content="dark">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="مجرّة باقر وروح السيد">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<title>مجرّة باقر وروح السيد</title>
+<style>
+:root{--line:rgba(114,135,255,.34);--cyan:#68e7ff;--pink:#ff78e5;--gold:#ffd98a;--violet:#9a6bff;--text:#f5f4ff;--muted:#b8bddf}
+body.theme-rose{--cyan:#ffb3d9;--pink:#ff5c94;--gold:#ffd1a8;--violet:#c44dff;--line:rgba(255,92,148,.32)}
+body.theme-gold{--cyan:#ffe9a8;--pink:#ff9f43;--gold:#ffb700;--violet:#e3a020;--line:rgba(255,183,0,.3)}
+body.theme-emerald{--cyan:#7effd5;--pink:#5cff9d;--gold:#c3ff5c;--violet:#20c997;--line:rgba(92,255,157,.3)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;color:var(--text);font-family:'Cairo',system-ui,-apple-system,sans-serif;overflow-x:hidden;background:var(--page-bg,radial-gradient(ellipse at 15% 15%,#25124d 0,transparent 34%),radial-gradient(ellipse at 82% 35%,#071d4b 0,transparent 38%),#030512);transition:background .8s}
+body.time-dawn{--page-bg:radial-gradient(ellipse at 15% 15%,#4d1a4d 0,transparent 34%),radial-gradient(ellipse at 82% 35%,#4b2d1a 0,transparent 38%),#0a0512}
+body.time-day{--page-bg:radial-gradient(ellipse at 15% 15%,#1a2d4d 0,transparent 34%),radial-gradient(ellipse at 82% 35%,#1a4b3d 0,transparent 38%),#050a12}
+body.time-dusk{--page-bg:radial-gradient(ellipse at 15% 15%,#3d1a2d 0,transparent 34%),radial-gradient(ellipse at 82% 35%,#2d1a4d 0,transparent 38%),#080318}
+body.time-night{--page-bg:radial-gradient(ellipse at 15% 15%,#25124d 0,transparent 34%),radial-gradient(ellipse at 82% 35%,#071d4b 0,transparent 38%),#030512}
+button,input,textarea,select{font:inherit;font-family:inherit}
+button{cursor:pointer;color:inherit}
+.stars{position:fixed;inset:0;z-index:-2;width:100%;height:100%;pointer-events:none;opacity:.96}
+.nebula{position:fixed;inset:-20%;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 20% 20%,#26125a66 0%,transparent 40%),radial-gradient(ellipse at 80% 80%,#e13bff33 0%,transparent 40%);}
+.progress{position:fixed;top:0;right:0;left:0;height:3px;z-index:60}
+.progress-bar{height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--violet),var(--pink));box-shadow:0 0 12px var(--violet);transition:width .1s}
+.shooting-star{position:fixed;top:0;right:0;width:130px;height:2px;background:linear-gradient(90deg,transparent,#fff,var(--cyan));box-shadow:0 0 12px var(--cyan);z-index:-1;pointer-events:none;animation:shooting 3s linear forwards}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes glowPulse{0%,100%{box-shadow:0 0 40px var(--violet),0 0 80px var(--cyan)}50%{box-shadow:0 0 55px var(--violet),0 0 110px var(--cyan)}}
+@keyframes shooting{0%{transform:translate(0,0) rotate(-25deg);opacity:1}100%{transform:translate(-45vw,30vh) rotate(-25deg);opacity:0}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-10px)}40%,80%{transform:translateX(10px)}}
+@keyframes shine{to{background-position:200% center}}
+@keyframes wobble{0%,100%{transform:translate(-50%, -50%) scale(1)}50%{transform:translate(-50%, -50%) scale(1.18) rotate(10deg)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes heartBeat{0%,100%{transform:scale(1)}25%{transform:scale(1.15)}50%{transform:scale(1)}75%{transform:scale(1.15)}}
+@keyframes ribbonDrift{0%{transform:rotate(0deg) scale(1)}50%{transform:rotate(180deg) scale(1.12)}100%{transform:rotate(360deg) scale(1)}}
+@keyframes cometFlight{0%,5%{opacity:0;transform:translate(0,0) rotate(-28deg)}10%{opacity:1}35%{opacity:0;transform:translate(-135vw,42vh) rotate(-28deg)}100%{opacity:0;transform:translate(-135vw,42vh) rotate(-28deg)}}
+body.intro-active .nebula, body.intro-active .galaxy-ribbon, body.intro-active .comet {animation-play-state: paused !important;}
+.galaxy-ribbon{position:fixed;inset:-30%;z-index:-1;pointer-events:none;opacity:.4;background:conic-gradient(from 10deg at 50% 50%, transparent 0deg, #4be7ff11 40deg, #d66aff22 65deg, transparent 95deg, #ffc66d11 145deg, transparent 190deg);}
+.comet{position:fixed;z-index:-1;pointer-events:none;width:clamp(100px,22vw,230px);height:2px;opacity:0;background:linear-gradient(90deg,transparent,#7beaff,#fff);box-shadow:0 0 8px #74dfff,0 0 22px #7d63ff;transform:rotate(-28deg);animation:cometFlight 8s linear infinite}
+.comet:after{content:'';position:absolute;right:0;top:-3px;width:7px;height:7px;border-radius:50%;background:#fff;box-shadow:0 0 12px 4px #7beaff}
+.comet-a{top:17%;right:-30%;animation-delay:1s}
+.comet-b{top:62%;right:-35%;width:140px;animation-duration:11s;animation-delay:4.5s;transform:rotate(-18deg)}
+.nav-toggle-btn{position:fixed;left:50%;transform:translateX(-50%);z-index:25;background:#07091bd9;border:1px solid var(--line);border-top:none;border-radius:0 0 16px 16px;padding:6px 28px;color:var(--cyan);font-size:1.1rem;font-weight:bold;cursor:pointer;transition:top .4s cubic-bezier(.16,1,.3,1), background .3s, transform .3s;box-shadow:0 6px 20px rgba(0,0,0,.6);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;outline:none}
+.nav-toggle-btn:hover{background:#17183d;color:#fff;padding-bottom:8px;padding-top:8px}
+.topbar{position:sticky;top:8px;z-index:20;margin:10px auto 18px;width:min(1180px,96%);display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;border:1px solid var(--line);border-radius:22px;background:#07091bd9;backdrop-filter:blur(18px);box-shadow:0 0 28px #211a5a55;transition:transform .45s cubic-bezier(.16,1,.3,1), opacity .3s}
+.topbar.hidden-nav{transform:translateY(-150%);opacity:0;pointer-events:none}
+.wrap{width:min(1180px,94%);margin:auto;position:relative;z-index:2}
+.brand{font-weight:800;letter-spacing:2px;background:linear-gradient(90deg, var(--cyan) 20%, #fff 50%, var(--pink) 80%); background-size: 200% auto; color: transparent; -webkit-background-clip: text; background-clip: text; text-shadow: 0 0 14px var(--cyan); white-space:nowrap;font-size:.95rem; animation: shine 4s linear infinite;}
+.nav{display:flex;gap:5px;flex-wrap:wrap}
+.nav button,.ghost{background:transparent;border:1px solid transparent;border-radius:12px;padding:8px 11px;color:var(--muted);font-size:.86rem;transition:.2s}
+.nav button.active,.nav button:hover,.ghost:hover{border-color:#4e64bd;background:#17183d;color:white}
+.tiny{border:1px solid var(--line);background:#101534;border-radius:50%;width:36px;height:36px;display:grid;place-items:center;transition:.2s;font-size:1rem;flex-shrink:0; position:relative}
+.tiny:hover{background:#232e6a;border-color:var(--cyan);transform:scale(1.08)}
+.hero{position:relative;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:22px;padding:22px 0 36px;background-size:cover;background-position:center;background-repeat:no-repeat;transition:background .3s}
+.heroText{z-index:2;padding:18px;position:relative}
+.eyebrow{color:var(--cyan);letter-spacing:3px;font-size:.78rem}
+.hero h1{font-size:clamp(2rem,5vw,3.6rem);line-height:1.2;margin:12px 0;background:linear-gradient(90deg, var(--cyan) 20%, #fff 50%, var(--pink) 80%);background-size:200% auto;color:transparent;background-clip:text;animation:shine 5s linear infinite; text-shadow: 0 0 20px rgba(104,231,255,0.3);}
+.hero p{color:#d3d8f5;line-height:1.9;max-width:480px}
+.primary{border:1px solid var(--violet);border-radius:99px;padding:12px 20px;background:linear-gradient(100deg,var(--violet),var(--cyan));box-shadow:0 0 20px var(--violet);transition:.25s;font-weight:600;color:#fff}
+.primary:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 0 28px var(--cyan)}
+.cosmos{position:relative;width:100%;min-height:400px;display:block;touch-action:pan-y;perspective:900px;transform-style:preserve-3d}
+.cosmos::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,var(--violet) 0,transparent 65%);opacity:.13;pointer-events:none}
+.sun{position:absolute;top:50%;left:50%;width:100px;height:100px;margin:-50px 0 0 -50px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#a9f6ff 10%,var(--violet) 38%,#1c1858 70%);animation:float 5s ease-in-out infinite,glowPulse 4s ease-in-out infinite;z-index:3;display:grid;place-items:center;font-size:1.6rem;cursor:pointer;transition:transform .3s}
+.sun:after{content:'';position:absolute;inset:-15px;border:1px solid #a3aaff66;border-radius:50%;transform:rotateX(68deg);box-shadow:0 0 20px #6d70ff55;animation:spin 14s linear infinite;pointer-events:none}
+.sun:hover{transform:scale(1.06)}
+.orbit-ring{position:absolute;top:50%;left:50%;border:1px solid var(--cyan);border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:1;opacity:.35}
+.planet-slot{position:absolute;top:50%;left:50%;width:0;height:0;z-index:2;will-change:transform}
+.planet{position:absolute;width:36px;height:36px;top:-18px;left:-18px;border-radius:50%;cursor:grab;display:grid;place-items:center;font-size:15px;box-shadow:0 0 14px var(--cyan),inset 0 -3px 6px #0006;transition:filter .2s,box-shadow .3s,transform .15s;will-change:transform;touch-action:none;user-select:none;-webkit-user-select:none}
+.planet.wobble{animation:wobble .4s}
+.planet span{display:block;pointer-events:none;transition:transform .2s}
+.planet:hover{filter:brightness(1.35) saturate(1.3);z-index:5;cursor:grab}
+.planet:hover span{transform:scale(1.25)}
+.planet:active{cursor:grabbing}
+.planet::after{content:attr(data-title);position:absolute;bottom:110%;left:50%;transform:translateX(-50%);background:#0b0e27;border:1px solid var(--violet);padding:4px 9px;border-radius:8px;font-size:11px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s;margin-bottom:4px;color:#e7e9ff;font-weight:600;box-shadow:0 4px 14px #000a}
+.planet:hover::after{opacity:1}
+.addPlanetBtn{position:absolute;bottom:8px;right:8px;width:42px;height:42px;border-radius:50%;border:1px solid var(--violet);background:#11183bdd;color:var(--cyan);font-size:1.5rem;font-weight:600;display:grid;place-items:center;z-index:10;box-shadow:0 0 18px var(--violet);transition:.3s;backdrop-filter:blur(8px)}
+.addPlanetBtn:hover{background:#232e6a;transform:scale(1.12) rotate(90deg);border-color:var(--cyan)}
+.section{scroll-margin-top:90px;margin:20px 0 34px}
+.sectionHead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.sectionHead h2{font-size:1.3rem;margin:0}.sectionHead p{color:var(--muted);margin:4px 0 0;font-size:.86rem}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.panel,.event,.memory,.message{background:linear-gradient(140deg,#111534db,#070b20e8);border:1px solid var(--line);border-radius:20px;padding:17px;box-shadow:0 10px 35px #0003;backdrop-filter:blur(10px);transition:transform .25s,border-color .25s,box-shadow .25s;position:relative;z-index:2}
+.panel:hover,.event:hover,.memory:hover{transform:translateY(-4px);border-color:var(--cyan);box-shadow:0 14px 40px #0004,0 0 30px var(--cyan)}
+.event{position:relative;overflow:hidden}
+.event:before{content:'';position:absolute;width:120px;height:120px;border-radius:50%;left:-35px;top:-45px;background:radial-gradient(circle,var(--violet),transparent 70%);opacity:.3}
+.event:after{content:'✦';position:absolute;right:14px;bottom:10px;color:#7cecff55;animation:float 2.4s infinite;pointer-events:none}
+.event .symbol{font-size:1.8rem}.event h3{margin:6px 0}
+.muted{color:var(--muted);font-size:.88rem;line-height:1.7}
+.date{color:var(--cyan);font-size:.85rem}
+.timer{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-top:13px}
+.timebit{position:relative;padding:8px 2px;border:1px solid #42467b66;border-radius:11px;text-align:center;background:#070b20;overflow:hidden;cursor:pointer;transition:transform .2s, border-color .2s}
+.timebit:hover{transform:translateY(-2px);border-color:var(--cyan)}
+.timebit b{display:block;font-size:1.12rem;color:white;position:relative;z-index:2}
+.timebit small{font-size:.7rem;color:#b9c0e8;position:relative;z-index:2}
+.tb-planet{position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);font-size:2rem;opacity:0.15;z-index:1;pointer-events:none;animation:float 6s ease-in-out infinite;transition:opacity .3s, transform .3s}
+.timebit:hover .tb-planet{opacity:0.4;transform:translate(-50%, -50%) scale(1.2)}
+.layout2{display:grid;grid-template-columns:1.2fr .8fr;gap:14px}
+.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.memory{padding:0;overflow:hidden}
+.memoryArt{height:120px;display:grid;place-items:center;font-size:2.5rem;background:radial-gradient(circle at 40% 35%,var(--violet),#17235d 42%,#06091c 78%);position:relative;overflow:hidden;transition:filter .3s;background-size:cover;background-position:center}
+.memoryArt.hasImg{cursor:zoom-in}.memoryArt.hasImg:hover{filter:brightness(1.15)}
+.memoryArt:before,.memoryArt:after{content:'✦  ·  ✧   ·   ✦';position:absolute;color:#fff9;letter-spacing:14px;font-size:.7rem;animation:float 5s infinite}
+.memoryArt:after{transform:translateY(34px);animation-delay:-2s}
+.memoryBody{padding:10px}.memoryBody h3{font-size:.95rem;margin:0 0 4px;padding-left:30px;}
+.memoryActions{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;align-items:center}
+.smallBtn{border:1px solid #4c5794;background:#11183b;border-radius:10px;padding:6px 9px;font-size:.78rem;transition:.2s;color:var(--text)}
+.smallBtn:hover{background:#29215e;border-color:var(--cyan)}
+.heartBtn{border:1px solid #4c5794;background:#11183b;border-radius:10px;padding:6px 10px;font-size:.82rem;transition:.2s;font-weight:600}
+.heartBtn:hover{transform:scale(1.08);border-color:var(--pink)}
+.heartBtn.liked{background:linear-gradient(120deg,var(--pink),var(--violet));border-color:var(--pink);color:#fff}
+.formrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.field{min-width:0;flex:1;background:#070b20;border:1px solid #343d75;border-radius:12px;color:white;padding:11px;outline:none;transition:.2s;width:100%}
+.field:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #66dfff22}
+textarea.field{width:100%;resize:vertical;min-height:90px}
+.msgList{display:grid;gap:9px}.message{padding:12px 14px}
+.message p{white-space:pre-wrap;line-height:1.7;margin:5px 0}.message small{color:var(--muted)}
+.quote{line-height:1.9;font-size:1.05rem;background:radial-gradient(ellipse at top right,#321d61,#090d24 70%);border-color:var(--violet);font-family:'Amiri',serif}
+.quote p{margin-top:0;margin-bottom:16px;text-align:justify;}
+.quote .signature{color:var(--pink);font-size:1.3rem;margin-top:15px;font-family:'Amiri',serif;text-align:left;}
+.quote .highlight{color:var(--gold);font-weight:bold;}
+.audioBox{display:grid;gap:12px}
+.audioDisc{width:95px;height:95px;border-radius:50%;margin:auto;background:repeating-radial-gradient(circle,#18235b 0 5px,#070a1d 6px 10px);border:3px solid var(--violet);display:grid;place-items:center;font-size:2rem;animation:spin 12s linear infinite;box-shadow:0 0 28px var(--violet)}
+.audioDisc.paused{animation-play-state:paused}
+.playlistList{display:flex;flex-direction:column;gap:4px;max-height:250px;overflow-y:auto;margin-top:8px}
+.trackRow{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:10px;border:1px solid #2a3160;cursor:pointer;font-size:.85rem;transition:.2s;position:relative}
+.trackRow:hover{background:#131a45;border-color:#4e5898}
+.trackRow.active{background:#1a2050;border-color:var(--cyan)}
+.trackInfo{flex:1;overflow:hidden;}
+.trackName{font-weight:600;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.trackDesc{color:var(--muted);font-size:.75rem;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.trackPlayIcon{color:var(--cyan);font-weight:700;min-width:16px;font-size:1.1rem;}
+.dotsBtn{background:transparent;border:none;color:var(--text);font-size:1.2rem;cursor:pointer;padding:0 8px;transition:.2s;display:grid;place-items:center;line-height:1;}
+.dotsBtn:hover{color:var(--cyan);transform:scale(1.2)}
+.actionMenuGrid{display:grid;gap:10px;margin-top:15px;}
+.actionBtn{padding:12px;background:#070b20;border:1px solid var(--line);border-radius:12px;color:var(--text);text-align:right;font-weight:600;transition:.2s;display:flex;align-items:center;gap:10px;}
+.actionBtn:hover{background:#17183d;border-color:var(--cyan);}
+.actionBtn.danger{color:#ff9bb1;border-color:#a54766;}
+.actionBtn.danger:hover{background:#3a1520;border-color:#ff5c94;}
+.profile-hero { text-align: center; margin-bottom: 25px; display: flex; flex-direction: column; align-items: center; }
+.profile-img { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 3px solid var(--cyan); box-shadow: 0 0 25px rgba(104,231,255,0.4), inset 0 0 10px #000; margin-bottom: 15px; }
+.profile-name { font-size: 1.4rem; font-weight: 800; color: #fff; text-shadow: 0 0 10px var(--cyan); margin: 0; }
+.socialGrid { display: flex; flex-direction: column; gap: 12px; max-width: 450px; margin: 0 auto 20px; }
+.social { display: flex; align-items: center; gap: 15px; padding: 12px 16px; background: linear-gradient(140deg, rgba(17,21,52,0.8), rgba(7,11,32,0.9)); border: 1px solid var(--line); border-radius: 16px; text-decoration: none; color: var(--text); transition: all 0.25s ease; position: relative; overflow: hidden; cursor: pointer; }
+.social:hover { transform: translateY(-3px) scale(1.02); border-color: var(--cyan); box-shadow: 0 5px 15px rgba(104, 231, 255, 0.15); }
+.socialIcon { width: 45px; height: 45px; border-radius: 12px; display: grid; place-items: center; flex-shrink: 0; padding: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+.socialIcon svg { width: 100%; height: 100%; }
+.socialInfo { flex: 1; display: flex; flex-direction: column; }
+.socialInfo b { font-size: 0.95rem; color: #fff; }
+.socialInfo .muted { font-size: 0.8rem; margin-top: 2px; }
+.socialAction { color: var(--cyan); font-size: 1.2rem; opacity: 0.7; transition: 0.2s; }
+.social:hover .socialAction { opacity: 1; transform: translate(-3px, -3px); }
+.del-social { background: transparent; border: none; color: var(--muted); font-size: 1.2rem; padding: 5px; cursor: pointer; transition: 0.2s; z-index: 2; }
+.del-social:hover { color: #ff5c94; transform: scale(1.2); }
+.social-footer-quote { text-align: center; margin-top: 40px; padding: 25px; background: linear-gradient(140deg, rgba(17,21,52,0.6), rgba(7,11,32,0.8)); border-radius: 20px; border: 1px solid var(--violet); font-family: 'Amiri', serif; font-size: 1.2rem; line-height: 1.9; color: var(--gold); box-shadow: 0 0 20px rgba(154,107,255,0.2); }
+.social-footer-quote .heart { color: var(--pink); display: inline-block; animation: heartBeat 1.5s infinite; }
+.footer{text-align:center;padding:25px 0 40px;color:#9299c6;font-size:.8rem;position:relative;z-index:2}
+.modal{position:fixed;inset:0;background:#02030ddf;backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;z-index:200;padding:18px;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
+.modal.show{opacity:1;visibility:visible}
+.modalCard{width:min(460px,100%);max-height:90vh;overflow-y:auto;border:1px solid var(--violet);border-radius:24px;background:#0b0e27;padding:24px;box-shadow:0 0 60px var(--violet);transform:translateY(20px) scale(.96);transition:transform .3s}
+.modal.show .modalCard{transform:none}
+.modalCard h2{margin-top:0}
+.sender-options { display: flex; gap: 10px; margin-top: 8px; margin-bottom: 15px; }
+.sender-option { flex: 1; padding: 12px; border: 1px solid var(--line); border-radius: 12px; background: #070b20; text-align: center; cursor: pointer; font-weight: 700; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.sender-option:hover { background: #131a45; border-color: var(--cyan); }
+.sender-option.active { background: linear-gradient(100deg, var(--violet), var(--cyan)); border-color: var(--cyan); color: #fff; box-shadow: 0 0 15px var(--violet); }
+.whisperReceive { text-align: center; padding: 10px; }
+.whisper-icon { font-size: 3.5rem; animation: float 3s infinite; margin-bottom: 10px; }
+.whisper-text { font-family: 'Amiri', serif; font-size: 1.3rem; line-height: 1.9; color: var(--gold); background: rgba(0,0,0,0.2); padding: 15px; border-radius: 15px; border: 1px dashed var(--gold); }
+.whisper-sender { color: var(--pink); font-weight: bold; margin-top: 10px; font-size: 1.1rem; }
+.bottle-icon { font-size: 4rem; animation: float 4s infinite; margin-bottom: 15px; filter: drop-shadow(0 0 15px var(--cyan)); }
+.bottle-text { font-family: 'Amiri', serif; font-size: 1.4rem; line-height: 2; color: #fff; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 15px; border: 1px solid var(--violet); box-shadow: inset 0 0 20px rgba(154,107,255,0.2); }
+.milestones-grid { display: flex; flex-direction: column; gap: 15px; margin-top: 15px; }
+.milestone-card { display: flex; align-items: center; gap: 15px; padding: 15px; background: rgba(0,0,0,0.3); border: 1px solid var(--cyan); border-radius: 16px; }
+.milestone-icon { font-size: 2.5rem; filter: drop-shadow(0 0 10px var(--cyan)); }
+.milestone-info { flex: 1; text-align: right; }
+.milestone-info h3 { margin: 0 0 5px; font-size: 1.1rem; color: var(--gold); }
+.milestone-info p { margin: 0; font-size: 0.9rem; color: var(--text); }
+.milestone-days { font-size: 1.8rem; font-weight: 800; color: var(--pink); text-shadow: 0 0 10px var(--pink); min-width: 60px; text-align: center; }
+.lockScreen{position:fixed;inset:0;z-index:100;background:radial-gradient(ellipse at 50% 35%,#20134b70,#0305125e 65%);backdrop-filter:blur(3px);display:grid;place-items:center;padding:20px;transition:opacity .6s,visibility .6s;overflow:hidden}
+.lockScreen.unlocked{opacity:0;visibility:hidden;pointer-events:none}
+.lp{position:absolute;font-size:2.2rem;filter:drop-shadow(0 0 12px var(--cyan));animation:float 6s ease-in-out infinite;cursor:pointer;transition:transform .2s;user-select:none;z-index:101}
+.lp:hover{transform:scale(1.3) rotate(10deg)}
+.lp1{top:12%;left:12%;animation-delay:0s;color:#fff}
+.lp2{bottom:15%;right:10%;animation-delay:-2s;font-size:2.8rem;filter:drop-shadow(0 0 15px var(--pink))}
+.lp3{top:22%;right:18%;animation-delay:-1s;font-size:1.5rem}
+.lp4{bottom:18%;left:15%;animation-delay:-4s;font-size:2rem;filter:drop-shadow(0 0 15px var(--gold))}
+.lockCard{width:min(400px,100%);text-align:center;border:1px solid #8b83ff;background:linear-gradient(145deg,#090d25d9,#07091bd9);border-radius:28px;padding:30px;box-shadow:0 0 24px #5e48ff55,0 0 85px #3e9dff25,inset 0 0 35px #6547ff12;position:relative;z-index:102;overflow:hidden}
+.lockCard:before{content:'';position:absolute;inset:-80%;pointer-events:none;background:conic-gradient(from 0deg,transparent,#66eaff12,transparent,#d75bff16,transparent);animation:ribbonDrift 24s linear infinite}
+.lockCard>*{position:relative;z-index:2}
+.lockCard.shake{animation:shake .5s}
+.lockIcon{font-size:3.2rem;animation:float 4s infinite;filter:drop-shadow(0 0 16px #7d75ff)}
+.lockCard input{text-align:center;letter-spacing:8px;font-size:1.3rem;width:100%;margin:15px 0}
+.toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;z-index:200;background:linear-gradient(120deg,#131b45,#0d1233);border:1px solid var(--violet);border-radius:14px;padding:12px 18px;transition:.3s;max-width:90%;text-align:center;box-shadow:0 0 30px var(--violet);font-size:.9rem}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.statsGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+.statItem{text-align:center;padding:14px 8px;border:1px solid #4e5898;border-radius:14px;background:#0a0f2a}
+.statNum{font-size:1.6rem;font-weight:800;background:linear-gradient(90deg,var(--cyan),var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent}
+.statLbl{font-size:.78rem;color:var(--muted);margin-top:4px}
+.themePicker{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:6px}
+.themePicker button{height:44px;border-radius:12px;border:2px solid transparent;transition:.2s}
+.themePicker button:hover{transform:scale(1.06);border-color:#fff8}
+.themePicker button.active{border-color:#fff;box-shadow:0 0 16px var(--cyan)}
+.hidden{display:none!important}
+.solarIntro {position: fixed; inset: 0; z-index: 150; background: radial-gradient(ellipse at 50% 48%, #101e49 0, #060a20 42%, #02030d 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; height: 100dvh; overflow: hidden; transition: opacity 0.6s, visibility 0.6s; will-change: opacity;}
+.solarIntro.depart { opacity: 0; visibility: hidden; pointer-events: none; }
+.introInner {display: flex; flex-direction: column; align-items: center; gap: 15px; width: 100%; max-width: 520px; padding: 10px;}
+.introBrand {background: linear-gradient(90deg, var(--cyan) 20%, #fff 50%, var(--pink) 80%); background-size: 200% auto; color: transparent; -webkit-background-clip: text; background-clip: text; letter-spacing: 4px; font-size: 0.78rem; font-weight: 700; text-align: center; text-shadow: 0 0 14px #68e7ff88; opacity: 0.8; animation: shine 4s linear infinite;}
+.solarScene {--size: min(82vw, 65vh, 500px); width: var(--size); height: var(--size); position: relative; flex-shrink: 0; transform: translateZ(0); backface-visibility: hidden; touch-action: none; contain: strict;}
+.sunCore {position: absolute; left: 50%; top: 50%; width: clamp(38px, 10.5%, 62px); height: clamp(38px, 10.5%, 62px); margin-left: calc(clamp(38px, 10.5%, 62px) / -2); margin-top: calc(clamp(38px, 10.5%, 62px) / -2); border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff8c9, #ffcb63 22%, #ff7b29 55%, #a82e22 78%); filter: drop-shadow(0 0 18px #ffb34e) drop-shadow(0 0 35px #ff8c3c99); z-index: 5; animation: sunBreath 4s ease-in-out infinite; transform: translateZ(0);}
+@keyframes sunBreath{50%{opacity: 0.85;}}
+.solarOrbit {position: absolute; left: 50%; top: 50%; border: 1px solid #8fb8ff42; border-radius: 50%; transform: translate3d(-50%, -50%, 0) rotate(-18deg); animation: solarSpin linear infinite; pointer-events: none; will-change: transform; backface-visibility: hidden;}
+.solarOrbit .solarPlanet {position: absolute; left: 50%; top: 0; transform: translate(-50%, -50%); border: 0; border-radius: 50%; padding: 0; cursor: pointer; pointer-events: auto; box-shadow: inset -5px -3px 6px #000a, 0 0 10px #78cfff55; transition: filter 0.2s, scale 0.2s; touch-action: manipulation; backface-visibility: hidden; z-index: 10; will-change: transform;}
+.solarOrbit .solarPlanet::after {content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; border-radius: 50%; pointer-events: auto;}
+.solarPlanet:hover, .solarPlanet:focus-visible { filter: brightness(1.5); scale: 1.2; outline: 2px solid #fff9; outline-offset: 4px; }
+.solarOrbit.o-mercury { width: 18%; height: 18%; animation-duration: 9s; }
+.o-mercury .solarPlanet { width: 8px; height: 8px; background: radial-gradient(circle at 30% 25%, #eee, #8b91a6 60%, #373b51); }
+.solarOrbit.o-venus { width: 30%; height: 30%; animation-duration: 14s; animation-direction: reverse; }
+.o-venus .solarPlanet { width: 13px; height: 13px; background: radial-gradient(circle at 30% 25%, #fff0b1, #d58c51 60%, #78412d); }
+.solarOrbit.o-earth { width: 42%; height: 42%; animation-duration: 19s; }
+.o-earth .solarPlanet { width: 22px; height: 22px; background: radial-gradient(circle at 30% 25%, #b9faff 0 10%, #3fda9a 18%, #167ad8 48%, #082b71 76%); box-shadow: 0 0 15px #49cfff, 0 0 28px #388dff77; }
+.solarOrbit.o-mars { width: 54%; height: 54%; animation-duration: 25s; animation-direction: reverse; }
+.o-mars .solarPlanet { width: 15px; height: 15px; background: radial-gradient(circle at 30% 25%, #ffd2a5, #d95c3e 55%, #6e211d); }
+.solarOrbit.o-jupiter { width: 66%; height: 66%; animation-duration: 34s; }
+.o-jupiter .solarPlanet { width: 30px; height: 30px; background: radial-gradient(circle at 30% 25%, #f3d2a4, #c88b60 55%, #87503f); }
+.solarOrbit.o-saturn { width: 78%; height: 78%; animation-duration: 43s; animation-direction: reverse; }
+.o-saturn .solarPlanet { width: 24px; height: 24px; background: radial-gradient(circle at 30% 25%, #fff0be, #c7a36b 65%, #806344); }
+.o-saturn .solarPlanet:after { content: ''; position: absolute; width: 36px; height: 10px; left: 50%; top: 50%; transform: translate(-50%, -50%) rotate(-24deg); border: 2px solid #e8d5a5; border-radius: 50%; }
+.solarOrbit.o-uranus { width: 88%; height: 88%; animation-duration: 54s; }
+.o-uranus .solarPlanet { width: 17px; height: 17px; background: radial-gradient(circle at 30% 25%, #d9ffff, #62c8d4 65%, #276079); }
+.solarOrbit.o-neptune { width: 96%; height: 96%; animation-duration: 66s; animation-direction: reverse; }
+.o-neptune .solarPlanet { width: 17px; height: 17px; background: radial-gradient(circle at 30% 25%, #a9c9ff, #3157db 65%, #141f72); }
+@keyframes solarSpin { from { transform: translate3d(-50%, -50%, 0) rotate(-18deg); } to { transform: translate3d(-50%, -50%, 0) rotate(342deg); } }
+@media (max-width: 800px) {
+  .topbar { flex-wrap: wrap; justify-content: center; }
+  .nav { order: 3; justify-content: center; width: 100%; }
+  .nav button { font-size: .76rem; padding: 7px 8px; }
+  .hero { grid-template-columns: 1fr; gap: 0; padding-top: 0; }
+  .heroText { text-align: center; padding-bottom: 0; }
+  .hero p { margin-inline: auto; }
+  .sun { width: 78px; height: 78px; margin: -39px 0 0 -39px; font-size: 1.3rem; }
+  .planet { width: 30px; height: 30px; top: -15px; left: -15px; font-size: 13px; }
+  .grid { grid-template-columns: 1fr; }
+  .layout2 { grid-template-columns: 1fr; }
+  .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .sectionHead { align-items: flex-start; }
+  .sectionHead h2 { font-size: 1.15rem; }
+  .panel, .event { padding: 14px; }
+  .statsGrid { grid-template-columns: repeat(2, 1fr); }
+  .brand { font-size: 0.8rem; letter-spacing: 1px; }
+  .tiny { width: 32px; height: 32px; font-size: 0.9rem; }
+}
+@media (prefers-reduced-motion: reduce) { *, *:before, *:after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; } }
+</style>
+</head>
+<body class="time-night intro-active">
+<div class="progress" aria-hidden="true"><div class="progress-bar" id="progressBar"></div></div>
+<canvas class="stars" id="starfield"></canvas>
+<div class="nebula"></div>
+<div class="galaxy-ribbon" aria-hidden="true"></div>
+<div class="comet comet-a" aria-hidden="true"></div>
+<div class="comet comet-b" aria-hidden="true"></div>
+
+<div class="solarIntro" id="solarIntro">
+  <div class="introInner">
+    <div class="introBrand">✦ BAQER × ZAHRATI ✦</div>
+    <div class="solarScene">
+      <div class="sunCore"></div>
+      <div class="solarOrbit o-mercury"><button class="solarPlanet" data-planet="mercury" aria-label="عطارد" title="عطارد"></button></div>
+      <div class="solarOrbit o-venus"><button class="solarPlanet" data-planet="venus" aria-label="الزهرة" title="الزهرة"></button></div>
+      <div class="solarOrbit o-earth"><button class="solarPlanet" data-planet="earth" aria-label="الأرض" title="الأرض"></button></div>
+      <div class="solarOrbit o-mars"><button class="solarPlanet" data-planet="mars" aria-label="المريخ" title="المريخ"></button></div>
+      <div class="solarOrbit o-jupiter"><button class="solarPlanet" data-planet="jupiter" aria-label="المشتري" title="المشتري"></button></div>
+      <div class="solarOrbit o-saturn"><button class="solarPlanet" data-planet="saturn" aria-label="زحل" title="زحل"></button></div>
+      <div class="solarOrbit o-uranus"><button class="solarPlanet" data-planet="uranus" aria-label="أورانوس" title="أورانوس"></button></div>
+      <div class="solarOrbit o-neptune"><button class="solarPlanet" data-planet="neptune" aria-label="نبتون" title="نبتون"></button></div>
+    </div>
+  </div>
+</div>
+
+<div class="lockScreen" id="lockScreen">
+  <div class="lp lp1" data-lp="1">🪐</div>
+  <div class="lp lp2" data-lp="2">💜</div>
+  <div class="lp lp3" data-lp="3">✨</div>
+  <div class="lp lp4" data-lp="4">🌙</div>
+  <div class="lockCard" id="lockCard">
+    <div class="lockIcon">🌌</div>
+    <div class="eyebrow">A PRIVATE UNIVERSE</div>
+    <h1 style="background:linear-gradient(90deg,#fff,#d1aaff,var(--cyan),#fff);background-size:200% auto;color:transparent;-webkit-background-clip:text;animation:shine 4s linear infinite;">مجرّة باقر وروح السيد</h1>
+    <p class="muted">عالم صغير إلنا وحدنا… ذكريات تلمع مثل النجوم.</p>
+    <label class="label" for="pin">أدخل رمز المجرّة</label>
+    <input class="field" id="pin" type="password" inputmode="numeric" maxlength="7" placeholder="•••••••" autocomplete="off">
+    <button class="primary" id="unlock">افتح مجرّتنا ✦</button>
+    <p class="muted" style="font-size:.75rem">تذكير: الرمز واجهة دخول محلية وليست حماية أمنية حقيقية.</p>
+  </div>
+</div>
+
+<button class="nav-toggle-btn" id="navToggleBtn">⬆</button>
+
+<header class="topbar" id="topbar">
+  <div class="brand">✦ BAQER × ZAHRATI</div>
+  <nav class="nav" id="mainNav">
+    <button class="active" data-target="home">الرئيسية</button>
+    <button data-target="moments">محطات حكايتنا</button>
+    <button data-target="memories">مجرّة الذكريات</button>
+    <button data-target="letters">رسائلنا</button>
+    <button data-target="music">موسيقتنا</button>
+    <button data-target="accounts">حساباتنا</button>
+  </nav>
+  <div style="display:flex;gap:4px;align-items:center;flex-wrap:wrap;justify-content:center;">
+    <button class="tiny" id="bottleBtn" title="زجاجة فضائية">🍾</button>
+    <button class="tiny" id="milestoneBtn" title="مناسباتنا">🎂</button>
+    <button class="tiny" id="ambientBtn" title="صوت الفضاء">🌌</button>
+    <button class="tiny" id="sparkleBtn" title="همسات النجوم">✧</button>
+    <button class="tiny" id="surpriseBtn" title="مفاجأة">🎁</button>
+    <button class="tiny" id="statsBtn" title="إحصائيات">📊</button>
+    <button class="tiny" id="settingsBtn" title="إعدادات">⚙</button>
+  </div>
+</header>
+
+<main class="wrap">
+<section class="hero" id="home">
+  <div class="heroText">
+    <div class="eyebrow">OUR LITTLE UNIVERSE</div>
+    <h1>مجرّة باقر وروح السيد</h1>
+    <p>بعالمٍ واسع مليان نجوم، أكو تفاصيل صغيرة تصير كون كامل بداخلنا… كل كوكب هنا ذكرى، وكل ذكرى إلها حكاية تنتظرك.</p>
+    <p class="muted" style="margin-top:14px">✨ اسحب الكوكب لأي مكان، أو اضغط عليه حتى تنفتح حكايته. زر ＋ يضيف كوكبًا جديدًا.</p>
+  </div>
+  <div class="cosmos" id="cosmos" aria-label="كواكب تفاعلية">
+    <div class="sun" id="sunPlanet" role="button" tabindex="0" title="اضغط على قلب المجرّة">♥</div>
+    <button class="addPlanetBtn" id="addPlanetBtn" title="أضف كوكبًا جديدًا">＋</button>
+  </div>
+</section>
+
+<section class="section" id="moments">
+  <div class="sectionHead"><div><h2>✦ ثلاث نجوم في حكايتنا</h2><p>لحظات صارت جزءًا من مجرّتنا، والعدادات تتحدّث كل ثانية.</p></div><span class="pill">LIVE COSMIC CLOCK</span></div>
+  <div class="grid">
+    <article class="event"><div class="symbol">🪐</div><h3>أول تعارف بيننا</h3>
+      <div class="date">8 أيلول 2026 · الساعة 8:00 مساءً</div>
+      <p class="muted">من هنا بدأت حكاية صغيرة، وصارت إلها مجرّة بداخلنا.</p>
+      <div class="timer" data-date="2026-09-08T20:00:00+03:00">
+        <div class="timebit"><span class="tb-planet">🪐</span><b>--</b><small>يوم</small></div>
+        <div class="timebit"><span class="tb-planet">✨</span><b>--</b><small>ساعة</small></div>
+        <div class="timebit"><span class="tb-planet">🌙</span><b>--</b><small>دقيقة</small></div>
+        <div class="timebit"><span class="tb-planet">💫</span><b>--</b><small>ثانية</small></div>
+      </div>
+    </article>
+    <article class="event"><div class="symbol">💙</div><h3>أول اعتراف من باقر</h3>
+      <div class="date">2 تشرين الأول 2026 · الساعة 5:00 فجرًا</div>
+      <p class="muted">لحظة صار بيها الكلام أقرب للقلب من كل الصمت.</p>
+      <div class="timer" data-date="2026-10-02T05:00:00+03:00">
+        <div class="timebit"><span class="tb-planet">☄️</span><b>--</b><small>يوم</small></div>
+        <div class="timebit"><span class="tb-planet">🌟</span><b>--</b><small>ساعة</small></div>
+        <div class="timebit"><span class="tb-planet">🌌</span><b>--</b><small>دقيقة</small></div>
+        <div class="timebit"><span class="tb-planet">🛸</span><b>--</b><small>ثانية</small></div>
+      </div>
+    </article>
+    <article class="event"><div class="symbol">💜</div><h3>أول اعتراف من روح السيد</h3>
+      <div class="date">13 تشرين الأول 2026 · الساعة 3:30 فجرًا</div>
+      <p class="muted">«هيه روح السيد»… كلمة إلها مكانها الخاص بين النجوم.</p>
+      <div class="timer" data-date="2026-10-13T03:30:00+03:00">
+        <div class="timebit"><span class="tb-planet">💜</span><b>--</b><small>يوم</small></div>
+        <div class="timebit"><span class="tb-planet">💖</span><b>--</b><small>ساعة</small></div>
+        <div class="timebit"><span class="tb-planet">💫</span><b>--</b><small>دقيقة</small></div>
+        <div class="timebit"><span class="tb-planet">🎇</span><b>--</b><small>ثانية</small></div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<div class="layout2">
+<section class="section" id="memories">
+  <div class="sectionHead">
+    <div>
+      <h2>🌠 مجرّة الذكريات</h2>
+      <p>أضف صوركم وخلّي كل صورة نجمًا بمكانه.</p>
+    </div>
+    <div style="display:flex; gap:8px; align-items:center;">
+      <button class="primary" id="searchMemoryBtn" style="background:#101534; border-color:var(--line); border-radius:50px; padding:12px 16px; font-size:1.1rem; display:grid; place-items:center; box-shadow:none;">🔍</button>
+      <button class="primary" id="addMemoryBtn">＋ أضف ذكرى</button>
+    </div>
+  </div>
+  <div class="gallery" id="gallery"></div>
+  <div class="noItems hidden" id="galleryEmpty">جاري تحميل الذكريات... ⏳</div>
+</section>
+<section class="section" id="letters">
+  <div class="sectionHead"><div><h2>💌 من قلبي إلى نجمتي</h2><p>رسائل تكتبها وتبقى محفوظة بهذا المتصفح.</p></div></div>
+  <div class="panel">
+    <label class="label" for="messageText">رسالة جديدة</label>
+    <textarea class="field" id="messageText" placeholder="اكتب كلامًا تحب يبقى بين النجوم…"></textarea>
+    <div class="formrow"><input class="field" id="messageFrom" placeholder="اسم المرسل (اختياري)"><button class="primary" id="sendMessage">أرسلها للمجرّة ✦</button></div>
+  </div>
+  <div class="msgList" id="messageList" style="margin-top:12px"></div>
+  <div class="noItems hidden" id="messagesEmpty">جاري تحميل الرسائل... ⏳</div>
+</section>
+</div>
+
+<div class="layout2">
+<section class="section" id="music">
+  <div class="sectionHead"><div><h2>🎧 لحن مجرّتنا</h2><p>أضف أكثر من مقطع واختر اللي يعجبك.</p></div></div>
+  <div class="panel audioBox">
+    <div class="audioDisc" id="audioDisc">♫</div>
+    <h3 style="text-align:center;margin:0" id="audioTitle">لحن زهرتي</h3>
+    <audio id="audioPlayer" controls style="width:100%"></audio>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <label class="primary" style="text-align:center;display:block;font-size:.85rem;padding:12px;">＋ أضف مقاطع<input type="file" id="audioFile" accept="audio/*" multiple hidden></label>
+      <button class="smallBtn" id="clearTracksBtn" style="padding:12px">🗑 مسح الكل</button>
+    </div>
+    <div class="playlistList" id="playlist"></div>
+  </div>
+</section>
+<section class="section" id="letter">
+  <div class="sectionHead"><div><h2>✨ إلى نجمتي… إلى زهرتي</h2><p>كلمات من باقر</p></div></div>
+  <div class="quote">
+    <p>وسط زحام الأكوان، حيث تضيء النجوم بعيداً في الآفاق، هناك <span class="highlight">نجمةٌ اختارت أن تسكن قلبي</span> وتشرق في عتمة أيامي. وحدكِ من تملكين القدرة على إضفاء طعم آخر للوقت، حتى أظن أن العادي بوجودكِ يغدو استثنائياً، وأن أيسر اللحظات تصير عيداً.</p>
+    <p>لا أريد من الزمن عوداً ولا وعوداً كبرى، جل ما أتمناه أن تبقى تفاصيلنا العذبة منارةً لا تُطفأ، وأن يبقى لكل كلمة صادقة مكانها الأمين في الذاكرة. فكلما ضاق بنا طريق، رجعنا إلى تلك اللحظة الجميلة لنتذكر شكد كانت حلوة، وكيف كانت تليق بنا.</p>
+    <div class="signature">باقر <span class="heart">🤍</span></div>
+  </div>
+</section>
+</div>
+
+<section class="section" id="accounts">
+  <div class="sectionHead" style="justify-content:center; text-align:center;">
+    <div>
+      <h2>🌐 حساباتي.. عوالمي</h2>
+      <p>إذا أردت أن تجدني، ستجدني هنا دائماً بانتظارك.</p>
+    </div>
+  </div>
+  
+  <div class="profile-hero">
+    <img src="https://i.ibb.co/VW6x8qms/IMG.jpg" alt="باقر" class="profile-img" id="profilePic">
+    <h3 class="profile-name">باقر</h3>
+  </div>
+
+  <div style="text-align:center; margin-bottom:20px;">
+    <button class="primary" id="addSocialBtn">＋ أضف حسابًا</button>
+  </div>
+  
+  <div class="socialGrid" id="socialList"></div>
+  <div class="noItems hidden" id="socialEmpty">جاري تحميل الحسابات... ⏳</div>
+
+  <div class="social-footer-quote">
+    كل درب في هذا الكون... وكل تفصيل صغير في مجرّتي، ما هو إلا انعكاس لعالمكِ الذي يسكنني. 
+    <br>
+    <span class="heart">♥</span> أنتِ المجرّة، وما حولكِ إلا نجوم <span class="heart">♥</span>
+  </div>
+</section>
+</main>
+
+<footer class="footer">✦ BAQER × ZAHRATI ✦<br>مجرّتنا صغيرة… لكن ذكرياتها تلمع مثل النجوم.</footer>
+
+<div class="modal" id="modal"><div class="modalCard" id="modalContent"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+(()=>{
+'use strict';
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const safe=(s='')=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+// ==========================================
+// ✅ إعداد OneSignal
+// ==========================================
+window.OneSignalDeferred = window.OneSignalDeferred || [];
+OneSignalDeferred.push(async function(OneSignal) {
+  await OneSignal.init({
+    appId: "05d7e381-8b08-44b7-b55f-f9e747224936", 
+    allowLocalhostAsSecureOrigin: true,
+  });
+  const currentUser = localStorage.getItem('bz_my_name') || 'باقر';
+  const externalId = currentUser === 'باقر' ? 'baqer' : 'zahrati';
+  await OneSignal.login(externalId);
+  console.log('OneSignal Linked:', externalId);
+});
+
+function updateOneSignalUser(name) {
+  if (window.OneSignalDeferred) {
+    OneSignalDeferred.push(async function(OneSignal) {
+      const externalId = name === 'باقر' ? 'baqer' : 'zahrati';
+      await OneSignal.login(externalId);
+      console.log('OneSignal Updated:', externalId);
+    });
+  }
+}
+
+const store = {
+  get(k, d) { try { const v = localStorage.getItem(k); if (v === null) return d; try { return JSON.parse(v); } catch { return v; } } catch(e) { return d; } },
+  set(k, v) { try { localStorage.setItem(k, typeof v === 'string' ? JSON.stringify(v) : JSON.stringify(v)); } catch(e) {} },
+  remove(k) { try { localStorage.removeItem(k); } catch(e) {} }
+};
+
+function burst(x, y) {
+  const colors = ['#68e7ff','#ff78e5','#ffd98a','#9a6bff','#ffffff','#c54de8','#4be7ff'];
+  const count = 14;
+  for (let i = 0; i < count; i++) {
+    const p = document.createElement('div');
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    const size = 4 + Math.random() * 6;
+    p.style.cssText = `position:fixed;left:${x}px;top:${y}px;width:${size}px;height:${size}px;border-radius:50%;background:${color};box-shadow:0 0 10px ${color},0 0 18px ${color};pointer-events:none;z-index:99999;will-change:transform,opacity;`;
+    document.body.appendChild(p);
+    const angle = Math.random() * Math.PI * 2;
+    const speed = 40 + Math.random() * 120;
+    const dx = Math.cos(angle) * speed;
+    const dy = Math.sin(angle) * speed;
+    if (p.animate) {
+      p.animate([{ transform: 'translate(-50%, -50%) scale(1)', opacity: 1 }, { transform: `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) scale(0)`, opacity: 0 }], { duration: 600 + Math.random() * 400, easing: 'cubic-bezier(0.1, 0.7, 0.3, 1)', fill: 'forwards' });
+    }
+    setTimeout(() => { try { p.remove(); } catch(e){} }, 1200);
+  }
+}
+
+const starPoems = [
+  "أنتِ نجمة في سماء قلبي، لا تغيب أبداً ✨",
+  "كل النجوم في الكون لا تساوي لمعة عيونك 💫",
+  "أحبك بعدد النجوم، وبعدد حبيبات الرمل في الكون 💜",
+  "قلبي مجرّة، وأنتِ الشمس التي تدور حولها 🪐",
+  "حين تغيبين، يغيب القمر وتنام النجوم 🌙",
+  "أنتِ أجمل صدفة في هذا الكون الواسع ✨",
+  "لو كان الحب نجوماً، لكان حبي لك مجرة كاملة 💖",
+  "أحبك كما تحب الأرض ضوء الشمس، بلا توقف ☀️"
+];
+
+const heartMessages = [
+  "يا زهرتي، أنتِ النبض اللي يحيي فؤادي كل يوم. عيونك هي المجره اللي أضيع بيها وما أريد أرجع. 💜",
+  "فؤادي ما عرف طعم الحياة غير من يوم شفت عيونك. أنتِ كل الحكاية، وكل نجوم السما ما تسوى ابتسامتك. ✨",
+  "بعيوني أنتِ الحلم، وبفؤادي أنتِ الأمان، وبيومي أنتِ أحلى صدفة صارت. 🪐",
+  "زهرتي، لو خيروني بين الكون كله وبين عيونك، أختار عيونك لأن بيهم أشوف كل الكون اللي أحبه. ❤️",
+  "كل ما أدقق بفؤادي ألكي اسمك محفور بيه، وكل نبضة تگول \"زهرتي\". 🌷",
+  "عيوني ما تشوف غيرك، وفؤادي ما يدق غير الك، يا أجمل زهرة بالدنيا. 🌙",
+  "أنتِ مو بس زهرتي... أنتِ الفصول الأربعة بفؤادي، وأنتِ الربيع اللي ما يخلص بعيوني. 🌸",
+  "أحبك، وبعد أحبك، وراح أظل أحبك... تدرين ليش؟ لأنك زهرتي، وفؤادي، وعيوني. 💖"
+];
+let heartMsgIndex = 0;
+
+const supabaseUrl = 'https://gsgruhpkzgsxtirgtyvl.supabase.co';
+const supabaseKey = 'sb_publishable_Vg7RykDtSYzHzZGgfbpV-g_7IQPLY9s';
+const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+const IMGBB_API_KEY = 'f504dffeaeadffeb24b5dd1ee4e5a24d';
+const IMGBB_ENDPOINT = 'https://api.imgbb.com/1/upload';
+
+// المتغيرات
+let planets = [];
+let memories = []; 
+let messages = []; 
+let socials = []; 
+let tracks = [];
+let currentTrack = -1; 
+let currentMemSearch = ''; 
+let selectedSender = localStorage.getItem('bz_my_name') || 'باقر';
+
+// دوال تحميل البيانات من السيرفر
+async function loadPlanets() {
+  const { data, error } = await _supabase.from('planets').select('*').order('created_at', { ascending: true });
+  if (!error) {
+    planets = data;
+    renderCosmos();
+  }
+}
+
+async function loadSettings() {
+  const { data, error } = await _supabase.from('settings').select('*').eq('id', 'heroBg').single();
+  if (!error && data) {
+    document.querySelector('.hero').style.backgroundImage = `linear-gradient(rgba(3,5,18,0.72),rgba(3,5,18,0.72)),url('${data.value}')`;
+  } else {
+    document.querySelector('.hero').style.backgroundImage = '';
+  }
+}
+
+async function saveSetting(key, value) {
+  await _supabase.from('settings').upsert({ id: key, value: value });
+}
+
+// الاستماع للتحديثات المباشرة (Realtime) لكل شيء
+function initRealtime() {
+  // الهمسات
+  _supabase.channel('whispers_channel').on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'star_whispers' }, (payload) => {
+    const newWhisper = payload.new;
+    if (newWhisper.sender !== selectedSender) {
+      showWhisperReceiveModal(newWhisper.sender, newWhisper.message);
+    }
+  }).subscribe();
+
+  // الذكريات (الصور)
+  _supabase.channel('memories_channel').on('postgres_changes', { event: '*', schema: 'public', table: 'memories' }, () => {
+    loadMemories();
+  }).subscribe();
+
+  // الكواكب
+  _supabase.channel('planets_channel').on('postgres_changes', { event: '*', schema: 'public', table: 'planets' }, () => {
+    loadPlanets();
+  }).subscribe();
+
+  // الإعدادات (الخلفية)
+  _supabase.channel('settings_channel').on('postgres_changes', { event: '*', schema: 'public', table: 'settings' }, () => {
+    loadSettings();
+  }).subscribe();
+
+  console.log('✅ Realtime Connected');
+}
+
+let audioCtx = null; let ambientPlaying = false; let ambientNodes = [];
+function toggleAmbientSound() {
+  const btn = $('#ambientBtn');
+  if (ambientPlaying) {
+    ambientNodes.forEach(n => { try { n.stop ? n.stop() : n.disconnect(); } catch(e){} });
+    ambientNodes = []; ambientPlaying = false;
+    btn.style.color = 'var(--text)'; btn.style.borderColor = 'var(--line)';
+    toast('تم إيقاف صوت الفضاء 🌌');
+  } else {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    const bufferSize = audioCtx.sampleRate * 2;
+    const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+    const output = noiseBuffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) { output[i] = Math.random() * 2 - 1; }
+    const whiteNoise = audioCtx.createBufferSource(); whiteNoise.buffer = noiseBuffer; whiteNoise.loop = true;
+    const filter = audioCtx.createBiquadFilter(); filter.type = 'lowpass'; filter.frequency.value = 200; filter.Q.value = 0.5;
+    const gain = audioCtx.createGain(); gain.gain.value = 0.015;
+    const lfo = audioCtx.createOscillator(); lfo.frequency.value = 0.1;
+    const lfoGain = audioCtx.createGain(); lfoGain.gain.value = 100;
+    lfo.connect(lfoGain); lfoGain.connect(filter.frequency);
+    whiteNoise.connect(filter); filter.connect(gain); gain.connect(audioCtx.destination);
+    whiteNoise.start(); lfo.start();
+    ambientNodes = [whiteNoise, lfo, gain, filter]; ambientPlaying = true;
+    btn.style.color = 'var(--cyan)'; btn.style.borderColor = 'var(--cyan)'; btn.style.boxShadow = '0 0 15px var(--cyan)';
+    toast('صوت الفضاء يلف المجرة الآن 🌌');
+  }
+}
+$('#ambientBtn').onclick = toggleAmbientSound;
+
+function showMilestones() {
+  const getDaysUntil = (month, day) => {
+    const now = new Date(); const thisYear = new Date(now.getFullYear(), month - 1, day);
+    if (now > thisYear) thisYear.setFullYear(thisYear.getFullYear() + 1);
+    const diff = thisYear - now; return Math.ceil(diff / (1000 * 60 * 60 * 24));
+  };
+  const baqerDays = getDaysUntil(6, 11); const zahratiDays = getDaysUntil(6, 29); 
+  openModal(`
+    <div style="text-align:center; margin-bottom:20px;">
+      <h2 style="color:var(--gold);">🎂 مناسباتنا القادمة</h2>
+      <p class="muted">كم يوم باقي لأيامنا المميزة؟</p>
+    </div>
+    <div class="milestones-grid">
+      <div class="milestone-card"><div class="milestone-icon">💙</div><div class="milestone-info"><h3>عيد ميلاد باقر</h3><p>11 يونيو</p></div><div class="milestone-days">${baqerDays}</div></div>
+      <div class="milestone-card"><div class="milestone-icon">💜</div><div class="milestone-info"><h3>عيد ميلاد روح السيد</h3><p>29 يونيو</p></div><div class="milestone-days">${zahratiDays}</div></div>
+    </div>
+    <div style="text-align:center; margin-top:20px;"><button class="primary" data-close>تمام ✦</button></div>
+  `);
+}
+$('#milestoneBtn').onclick = showMilestones;
+
+async function openBottleMenu() {
+  openModal(`
+    <div style="text-align:center;">
+      <div class="bottle-icon">🍾</div>
+      <h2 style="color:var(--cyan);">رسالة في زجاجة فضائية</h2>
+      <p class="muted" style="margin-bottom:20px;">ماذا تريد أن تفعل اليوم؟</p>
+      <div class="actionMenuGrid">
+        <button class="actionBtn" id="throwBottleBtn" style="justify-content:center; border-color:var(--violet);"><span style="font-size:1.5rem;">✍️</span> أرمِ زجاجة برسالة</button>
+        <button class="actionBtn" id="catchBottleBtn" style="justify-content:center; border-color:var(--cyan);"><span style="font-size:1.5rem;">🌊</span> أمسك زجاجة عشوائية</button>
+        <button class="ghost" data-close style="padding:12px;">إلغاء</button>
+      </div>
+    </div>
+  `);
+  $('#throwBottleBtn').onclick = showThrowBottleForm;
+  $('#catchBottleBtn').onclick = async () => {
+    const btn = $('#catchBottleBtn'); btn.innerHTML = 'جاري البحث في المحيط... ⏳'; btn.disabled = true;
+    const myName = localStorage.getItem('bz_my_name') || 'باقر';
+    const targetSender = myName === 'باقر' ? 'زهرتي' : 'باقر';
+    const { data, error } = await _supabase.from('bottles').select('*').eq('sender', targetSender).order('id', { ascending: false }).limit(20);
+    if (error || !data || data.length === 0) { toast('لم تجد أي زجاجة في هذا المحيط... ارمِ أنت واحدة أولاً!'); closeModal(); return; }
+    const bottle = data[Math.floor(Math.random() * data.length)];
+    $('#modalContent').innerHTML = `
+      <div style="text-align:center; padding:10px;">
+        <div style="font-size: 3rem; animation: wobble 1s infinite;">🍾</div>
+        <h2 style="color:var(--pink); margin-bottom:15px;">وجدت زجاجة من ${bottle.sender === 'باقر' ? 'باقر' : 'روح السيد'}!</h2>
+        <div class="bottle-text">"${safe(bottle.message)}"</div>
+        <p class="muted" style="margin-top:15px; font-size:0.8rem;">${new Date(bottle.created_at).toLocaleString('ar-IQ')}</p>
+        <button class="primary" data-close style="margin-top:20px; width:100%;">أعدها للمحيط 🌊</button>
+      </div>
+    `;
+    $$('#modalContent [data-close]').forEach(b=>b.onclick=closeModal);
+    for(let i=0; i<5; i++) { setTimeout(()=> burst(window.innerWidth/2, window.innerHeight/2), i*150); }
+  };
+}
+
+function showThrowBottleForm() {
+  openModal(`
+    <div style="text-align:center;">
+      <div class="bottle-icon">✍️</div>
+      <h2 style="color:var(--gold);">اكتب رسالتك السرية</h2>
+      <p class="muted" style="margin-bottom:15px;">ستبقى هذه الرسالة في الفضاء حتى يجدها الطرف الآخر ويقرأها.</p>
+      <label class="label">من أنت؟</label>
+      <div class="sender-options" id="bottleSenderGroup">
+        <div class="sender-option" data-value="باقر">💙 باقر</div>
+        <div class="sender-option" data-value="زهرتي">💜 روح السيد</div>
+      </div>
+      <textarea class="field" id="bottleMessage" style="min-height:120px; font-family:'Amiri', serif; font-size:1.1rem;" placeholder="اكتب همستك، شعرك، أو أي كلام تحب يبقى بين النجوم..."></textarea>
+      <div class="formrow" style="margin-top:15px;"><button class="primary" id="saveBottleBtn" style="flex:1;">أرسل للمحيط 🌊</button><button class="ghost" data-close>إلغاء</button></div>
+    </div>
+  `);
+  const options = $$('#bottleSenderGroup .sender-option');
+  options.forEach(opt => {
+    if(opt.dataset.value === selectedSender) opt.classList.add('active');
+    opt.onclick = () => { options.forEach(o => o.classList.remove('active')); opt.classList.add('active'); selectedSender = opt.dataset.value; };
+  });
+  $('#saveBottleBtn').onclick = async () => {
+    const msg = $('#bottleMessage').value.trim();
+    if(!msg) { toast('اكتب رسالة أولاً'); return; }
+    const btn = $('#saveBottleBtn'); btn.disabled = true; btn.textContent = 'جاري الإرسال... ⏳';
+    localStorage.setItem('bz_my_name', selectedSender);
+    updateOneSignalUser(selectedSender);
+    const { error } = await _supabase.from('bottles').insert([{ sender: selectedSender, message: msg }]);
+    if(error) { toast('حدث خطأ: ' + error.message); btn.disabled = false; btn.textContent = 'أرسل للمحيط 🌊'; }
+    else {
+      $('#modalContent').innerHTML = `
+        <div style="text-align:center; padding:20px 0;">
+          <div style="font-size: 4rem; animation: float 3s infinite;">🌊</div>
+          <h2 style="color:var(--cyan); margin:15px 0;">انطلقت زجاجتك!</h2>
+          <p class="muted" style="line-height:1.8;">ستطفو في محيط المجرة حتى يجدها الطرف الآخر ويفتحها.</p>
+          <button class="primary" data-close style="margin-top:20px; width:100%;">تمام ✦</button>
+        </div>
+      `;
+      $$('#modalContent [data-close]').forEach(b=>b.onclick=closeModal);
+      for(let i=0; i<6; i++) { setTimeout(()=> burst(window.innerWidth/2, window.innerHeight/2), i*100); }
+    }
+  };
+}
+$('#bottleBtn').onclick = openBottleMenu;
+
+function showWhisperReceiveModal(sender, message) {
+  openModal(`
+    <div class="whisperReceive">
+      <div class="whisper-icon">🌟</div>
+      <h2 style="color:var(--cyan); margin-bottom:15px;">وصلك همسة عبر النجوم!</h2>
+      <div class="whisper-text">"${safe(message)}"</div>
+      <div class="whisper-sender">من: ${safe(sender === 'زهرتي' ? 'روح السيد' : sender)} 💌</div>
+      <button class="primary" data-close style="margin-top:20px; width:100%;">حفظتها بقلبي ✦</button>
+    </div>
+  `);
+  for(let i=0; i<3; i++) { setTimeout(()=> burst(window.innerWidth/2, window.innerHeight/2), i*400); }
+}
+
+$('#sparkleBtn').onclick = (e) => {
+  burst(e.clientX, e.clientY);
+  const randomPoem = starPoems[Math.floor(Math.random() * starPoems.length)];
+  openModal(`
+    <h2 style="text-align:center; color:var(--gold);">✨ إرسال همسة عبر النجوم</h2>
+    <p class="muted" style="text-align:center; margin-bottom:15px;">اختر من الأشعار الرومانسية، أو اكتب همستك الخاصة لتطير فوراً للطرف الثاني.</p>
+    <label class="label">من أنت؟</label>
+    <div class="sender-options" id="whisperSenderGroup">
+      <div class="sender-option" data-value="باقر">💙 باقر</div>
+      <div class="sender-option" data-value="زهرتي">💜 روح السيد</div>
+    </div>
+    <label class="label">الهمسة / الشعر</label>
+    <textarea class="field" id="whisperMessage" style="min-height:100px; font-family:'Amiri', serif; font-size:1.1rem;">${randomPoem}</textarea>
+    <div style="display:flex; gap:5px; flex-wrap:wrap; margin-top:10px;">
+      ${starPoems.slice(0,3).map(p => `<button class="smallBtn" onclick="document.getElementById('whisperMessage').value='${p}'" style="font-size:0.7rem;">شعر آخر</button>`).join('')}
+    </div>
+    <div class="formrow" style="margin-top:20px;"><button class="primary" id="sendWhisperBtn" style="flex:1;">أرسلها الآن 🚀</button><button class="ghost" data-close>إلغاء</button></div>
+  `);
+  const options = $$('#whisperSenderGroup .sender-option');
+  options.forEach(opt => {
+    if(opt.dataset.value === selectedSender) opt.classList.add('active');
+    opt.onclick = () => { options.forEach(o => o.classList.remove('active')); opt.classList.add('active'); selectedSender = opt.dataset.value; };
+  });
+  $('#sendWhisperBtn').onclick = async () => {
+    const message = $('#whisperMessage').value.trim();
+    if(!message) { toast('اكتب همسة أولاً'); return; }
+    localStorage.setItem('bz_my_name', selectedSender);
+    updateOneSignalUser(selectedSender);
+    const btn = $('#sendWhisperBtn'); btn.disabled = true; btn.textContent = 'جاري الإرسال... ⏳';
+    const { error } = await _supabase.from('star_whispers').insert([{ sender: selectedSender, message }]);
+    if(error) { btn.disabled = false; btn.textContent = 'أرسلها الآن 🚀'; toast('حدث خطأ: ' + error.message); }
+    else {
+      const targetDisplayName = selectedSender === 'باقر' ? 'روح السيد' : 'باقري';
+      $('#modalContent').innerHTML = `
+        <div style="text-align:center; padding: 10px 0;">
+          <div style="font-size: 4.5rem; animation: float 3s infinite; margin-bottom: 15px; filter: drop-shadow(0 0 15px var(--cyan));">💌✨</div>
+          <h2 style="color: var(--gold); margin-bottom: 15px; font-size: 1.6rem;">انطلقت همستك!</h2>
+          <p style="font-size: 1.1rem; line-height: 2; color: #fff; margin-bottom: 25px;">
+            تركت همستك بريدها عبر النجوم...<br>ستهبط قريباً جداً على شاشة وهاتف <b style="color: var(--pink); font-size: 1.2rem;">${targetDisplayName}</b> ❤️
+          </p>
+          <button class="primary" data-close style="width: 100%; padding: 14px;">في انتظار الرد 🌌</button>
+        </div>
+      `;
+      $$('#modalContent [data-close]').forEach(b=>b.onclick=closeModal);
+      for(let i=0; i<6; i++) { setTimeout(()=> burst(window.innerWidth/2, window.innerHeight/2), i*150); }
+      for(let i=0; i<5; i++) setTimeout(()=>shootStar(), i*200);
+    }
+  };
+};
+
+async function loadMemories() {
+  $('#galleryEmpty').textContent = "جاري تحميل الذكريات... ⏳"; $('#galleryEmpty').classList.remove('hidden');
+  const { data, error } = await _supabase.from('memories').select('*').order('id', { ascending: false });
+  if(error) { console.error(error); $('#galleryEmpty').textContent = "حدث خطأ أثناء التحميل."; return; }
+  memories = data; renderMemories();
+}
+async function loadMessages() {
+  $('#messagesEmpty').textContent = "جاري تحميل الرسائل... ⏳"; $('#messagesEmpty').classList.remove('hidden');
+  const { data, error } = await _supabase.from('messages').select('*').order('id', { ascending: false });
+  if(error) { console.error(error); $('#messagesEmpty').textContent = "حدث خطأ."; return; }
+  messages = data; renderMessages();
+}
+async function loadTracks() {
+  const { data, error } = await _supabase.from('tracks').select('*').order('id', { ascending: false });
+  if(error) { console.error(error); return; }
+  tracks = data.map(t => ({ id: t.id, name: t.name, url: t.url, description: t.description, isCloud: true })); renderPlaylist();
+}
+async function loadSocials() {
+  $('#socialEmpty').textContent = "جاري تحميل الحسابات... ⏳"; $('#socialEmpty').classList.remove('hidden');
+  const { data, error } = await _supabase.from('socials').select('*').order('id', { ascending: false });
+  if(error) { console.error(error); $('#socialEmpty').textContent = "حدث خطأ."; return; }
+  socials = data; renderSocials();
+}
+
+async function uploadToImgbb(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = async () => {
+      try {
+        const base64 = reader.result.split(',')[1];
+        const formData = new FormData(); formData.append('image', base64); formData.append('name', file.name.replace(/\.[^.]+$/, ''));
+        const res = await fetch(`${IMGBB_ENDPOINT}?key=${IMGBB_API_KEY}`, { method: 'POST', body: formData });
+        const json = await res.json();
+        if (!res.ok || !json.success || !json.data) throw new Error(json.error?.message || 'فشل الرفع');
+        resolve(json.data.url);
+      } catch (err) { reject(err); }
+    };
+    reader.onerror = reject; reader.readAsDataURL(file);
+  });
+}
+async function uploadToSupabaseStorage(file) {
+  const fileExt = file.name.split('.').pop(); const fileName = `${Date.now()}-${Math.random().toString(36).substring(2, 9)}.${fileExt}`; const filePath = `${fileName}`;
+  const { data, error } = await _supabase.storage.from('audio').upload(filePath, file);
+  if (error) throw error;
+  const { data: urlData } = _supabase.storage.from('audio').getPublicUrl(filePath);
+  return { url: urlData.publicUrl, name: file.name };
+}
+function openActionMenu(title, options) {
+  let buttonsHtml = options.map(opt => `<button class="actionBtn ${opt.danger ? 'danger' : ''}" id="${opt.id}">${opt.icon} ${opt.label}</button>`).join('');
+  openModal(`<h2 style="margin-bottom:10px;">${title}</h2><div class="actionMenuGrid">${buttonsHtml}<button class="ghost" data-close style="margin-top:10px; padding:10px;">إلغاء</button></div>`);
+  options.forEach(opt => { $('#'+opt.id).onclick = () => { closeModal(); opt.action(); }; });
+}
+
+let introDone=false;
+function hideIntro(){
+  if(introDone)return; introDone=true;
+  const intro=$('#solarIntro'); intro.classList.add('depart'); document.body.classList.remove('intro-active');
+  setTimeout(()=>{intro.style.display='none';},620);
+}
+const planetMessages = {
+  mercury: { title: 'عطارد', text: 'عطارد أقرب كوكب للشمس، بس أنا دايماً أريد أكون أقرب واحد إلك. 💫', isGateway: false },
+  venus: { title: 'الزهرة', text: 'أنتِ زهرتي الجميلة، وجمالك يغلب جمال كل النجوم. 🌸', isGateway: false },
+  earth: { title: 'كوكب الأرض', text: 'أنتِ أرضي وأماني، وبيتك اللي أحس بيه بالاستقرار. اضغطي أدناه لدخول مجرتنا 🌍', isGateway: true },
+  mars: { title: 'المريخ', text: 'المريخ الكوكب الأحمر، بس قلبي اللي يحبك أشد حمرة ولهفة. ❤️‍🔥', isGateway: false },
+  jupiter: { title: 'المشتري', text: 'المشتري أكبر كوكب، بس حبي إلك أكبر من الكون كله. 🪐', isGateway: false },
+  saturn: { title: 'زحل', text: 'زحل محاط بحلقات، وأنا محاط بيك ومن حبك ما أقدر أفارقك. 💍', isGateway: false },
+  uranus: { title: 'أورانوس', text: 'أورانوس بارد ومائل، بس أنتِ دفيتي وعدلي بوسط هالدنيا. 🧊', isGateway: false },
+  neptune: { title: 'نبتون', text: 'نبتون أعمق كوكب، وأنا غارق بعيونك وبحبك للركبة. 🌊', isGateway: false }
+};
+
+function handleSolarPlanet(planet, clientX, clientY) {
+  const key = planet.dataset.planet; const msg = planetMessages[key];
+  if (!msg) return;
+  try { burst(clientX || innerWidth/2, clientY || innerHeight/2); } catch(e) {}
+  const btnText = msg.isGateway ? 'دخول المجرة ✦' : 'حسناً ✦';
+  openModal(`<div style="text-align:center"><div style="font-size:3rem;margin-bottom:10px">${msg.isGateway ? '🌍' : '✨'}</div><h2 style="color:var(--cyan)">${msg.title}</h2><p style="line-height:1.9;font-size:1.1rem;margin:15px 0">${msg.text}</p><div class="formrow" style="justify-content:center"><button class="primary" id="planetActionBtn">${btnText}</button></div></div>`);
+  $('#planetActionBtn').onclick = () => { closeModal(); if (msg.isGateway) hideIntro(); };
+}
+
+let _lastSolarPlanetTime = 0;
+function onSolarPlanetEvent(e) {
+  const planet = e.target.closest('.solarPlanet'); if (!planet) return;
+  const now = Date.now(); if (now - _lastSolarPlanetTime < 400) return; _lastSolarPlanetTime = now;
+  if (e.cancelable) e.preventDefault(); e.stopPropagation();
+  handleSolarPlanet(planet, e.clientX, e.clientY);
+}
+document.addEventListener('pointerdown', onSolarPlanetEvent);
+
+document.addEventListener('pointerdown', e => {
+  const sun = e.target.closest('#sunPlanet');
+  if (sun) {
+    e.preventDefault(); e.stopPropagation();
+    try { burst(e.clientX || innerWidth/2, e.clientY || innerHeight/2); } catch(err) {}
+    openModal(`<div style="text-align:center"><div style="font-size:3.5rem; animation:heartBeat 1.5s infinite; display:inline-block; margin-bottom:10px">💖</div><h2 style="margin:6px 0;color:var(--pink)">همسة إلى روح السيد</h2><p style="text-align:center;line-height:1.9;font-size:1.1rem;font-weight:600;min-height:80px;display:flex;align-items:center;justify-content:center;padding:0 10px;color:#fff">${heartMessages[heartMsgIndex]}</p><div class="formrow" style="justify-content:center;margin-top:16px"><button class="primary" id="nextHeartMsg">كلمة أجمل 💖</button><button class="ghost" data-close>تمام ✦</button></div></div>`);
+    $('#nextHeartMsg').onclick = () => { heartMsgIndex = (heartMsgIndex + 1) % heartMessages.length; const p = $('#modalContent').querySelector('p'); if (p) p.textContent = heartMessages[heartMsgIndex]; try { burst(innerWidth/2, innerHeight/2); } catch(err) {} };
+  }
+});
+
+$$('.lp').forEach(el=>el.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();try{burst(e.clientX || innerWidth/2,e.clientY || innerHeight/2);}catch(err){}}));
+$$('.timebit').forEach(tb=>tb.addEventListener('pointerdown',e=>{e.preventDefault();const p=tb.querySelector('.tb-planet');if(p){p.style.animation='none';void p.offsetWidth;p.style.animation='wobble 0.4s';}try{burst(e.clientX || innerWidth/2,e.clientY || innerHeight/2);}catch(err){}}));
+
+function unlockNow(){const ls=$('#lockScreen');ls.classList.add('unlocked');setTimeout(()=>ls.style.display='none',600);toast('أهلًا بك داخل مجرّتك ✨')}
+$('#unlock').onclick=()=>{if($('#pin').value==='2012629')unlockNow();else{const c=$('#lockCard');c.classList.add('shake');setTimeout(()=>c.classList.remove('shake'),500);toast('الرمز مو صحيح');$('#pin').value=''}};
+$('#pin').addEventListener('keydown',e=>{if(e.key==='Enter')$('#unlock').click()});
+
+const topbar=$('#topbar'),navToggleBtn=$('#navToggleBtn');
+function updateNavTogglePosition(){if(!topbar.classList.contains('hidden-nav')){const rect=topbar.getBoundingClientRect();navToggleBtn.style.top=(rect.bottom)+'px';}else{navToggleBtn.style.top='0px';}}
+function setNavHidden(hidden){if(hidden){topbar.classList.add('hidden-nav');navToggleBtn.style.top='0px';navToggleBtn.innerHTML='⬇';store.set('navHidden',true);}else{topbar.classList.remove('hidden-nav');updateNavTogglePosition();navToggleBtn.innerHTML='⬆';store.set('navHidden',false);}}
+navToggleBtn.onclick=()=>setNavHidden(!topbar.classList.contains('hidden-nav'));
+setTimeout(updateNavTogglePosition,150);
+window.addEventListener('resize',updateNavTogglePosition);
+window.addEventListener('scroll',updateNavTogglePosition,{passive:true});
+if(store.get('navHidden',false)){topbar.classList.add('hidden-nav');navToggleBtn.style.top='0px';navToggleBtn.innerHTML='⬇';}else{navToggleBtn.innerHTML='⬆';}
+
+function setTimeBg(){const h=new Date().getHours();document.body.classList.remove('time-dawn','time-day','time-dusk','time-night');if(h>=5&&h<11)document.body.classList.add('time-dawn');else if(h>=11&&h<17)document.body.classList.add('time-day');else if(h>=17&&h<20)document.body.classList.add('time-dusk');else document.body.classList.add('time-night');}
+setTimeBg();setInterval(setTimeBg,60000);
+
+function applyTheme(name){document.body.classList.remove('theme-rose','theme-gold','theme-emerald');if(name&&name!=='default')document.body.classList.add('theme-'+name);store.set('theme',name||'default');$$('[data-theme]').forEach(b=>b.classList.toggle('active',b.dataset.theme===(name||'default')));}
+applyTheme(store.get('theme','default'));
+
+const canvas=$('#starfield'),ctx=canvas.getContext('2d');let stars=[],w=0,h=0;
+function resizeStars(){w=canvas.width=innerWidth*devicePixelRatio;h=canvas.height=innerHeight*devicePixelRatio;canvas.style.width=innerWidth+'px';canvas.style.height=innerHeight+'px';stars=Array.from({length:Math.min(180,Math.floor(innerWidth/5))},()=>({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.5+.25,a:Math.random(),v:Math.random()*.012+.003,dx:(Math.random()-.5)*.18}))}
+function drawStars(){ctx.clearRect(0,0,w,h);for(const s of stars){s.a+=s.v;if(s.a>1||s.a<.12)s.v*=-1;s.x+=s.dx*devicePixelRatio;if(s.x<0)s.x=w;if(s.x>w)s.x=0;ctx.beginPath();ctx.arc(s.x,s.y,s.r*devicePixelRatio,0,Math.PI*2);ctx.fillStyle=`rgba(${120+Math.floor(s.r*70)},${190+Math.floor(s.r*40)},255,${s.a})`;ctx.fill()}requestAnimationFrame(drawStars)}
+addEventListener('resize',resizeStars);resizeStars();drawStars();
+
+function shootStar(){const star=document.createElement('div');star.className='shooting-star';star.style.top=(5+Math.random()*40)+'%';star.style.right='-10%';document.body.appendChild(star);setTimeout(()=>star.remove(),5000);}
+setInterval(()=>{if(Math.random()<0.65)shootStar()},4500);
+
+function tick(){const now=Date.now();$$('.timer').forEach(el=>{const target=new Date(el.dataset.date).getTime(),delta=Math.abs(now-target);const sec=Math.floor(delta/1000),vals=[Math.floor(sec/86400),Math.floor((sec%86400)/3600),Math.floor((sec%3600)/60),sec%60];el.querySelectorAll('b').forEach((b,i)=>b.textContent=String(vals[i]).padStart(i?2:1,'0'));const labels=el.querySelectorAll('small'),past=target<=now;labels[0].textContent=past?'يوم مضى':'يوم';labels[1].textContent=past?'ساعة مضت':'ساعة';labels[2].textContent=past?'دقيقة مضت':'دقيقة';labels[3].textContent=past?'ثانية مضت':'ثانية';});}
+tick();setInterval(tick,1000);
+
+const RING_COLORS=['#79dfff55','#e879ff44','#ffd98a44','#68e7ff33'];let planetStates=[];
+function getRingConfigs(){const isMobile=innerWidth<800;const configs=isMobile?[{r:65},{r:110},{r:155},{r:195}]:[{r:80},{r:135},{r:190},{r:240}];const count=Math.max(3,Math.min(configs.length,Math.ceil(planets.length/2)));return configs.slice(0,count)}
+function distributeEven(total,buckets){const base=Math.floor(total/buckets),extra=total%buckets;return Array.from({length:buckets},(_,i)=>base+(i<extra?1:0))}
+
+function renderCosmos(){
+  const cosmos=$('#cosmos');cosmos.querySelectorAll('.orbit-ring,.planet-slot').forEach(x=>x.remove());planetStates=[];
+  if(!planets.length) return;
+  const rings=getRingConfigs();const maxR=rings[rings.length-1].r;cosmos.style.height=(maxR*2+90)+'px';
+  rings.forEach((ring,ri)=>{const el=document.createElement('div');el.className='orbit-ring';el.style.width=(ring.r*2)+'px';el.style.height=(ring.r*2)+'px';el.style.borderColor=RING_COLORS[ri%RING_COLORS.length];cosmos.appendChild(el);});
+  const perRing=distributeEven(planets.length,rings.length);let idx=0;
+  rings.forEach((ring,ri)=>{const count=perRing[ri];for(let i=0;i<count;i++){const p=planets[idx++];if(!p) break;const slot=document.createElement('div');slot.className='planet-slot';slot.dataset.id=p.id;const planet=document.createElement('div');planet.className='planet';planet.dataset.title=p.title;planet.style.background=`radial-gradient(circle at 30% 25%,#ffffffcc,${p.color||'#68e7ff'} 45%,#0a0520 130%)`;planet.style.boxShadow=`0 0 14px ${p.color||'#68e7ff'}aa, inset 0 -3px 6px #0006`;planet.innerHTML=`<span>${p.emoji||'✨'}</span>`;slot.appendChild(planet);cosmos.appendChild(slot);const st={id:p.id,slot,planet,angle:(i/count)*Math.PI*2+ri*0.6,radius:ring.r,speed:(0.08+ri*0.03)*(ri%2===0?1:-1),paused:false,drag:null};planetStates.push(st);attachPlanetHandlers(st);}});
+}
+function attachPlanetHandlers(st){
+  st.planet.addEventListener('pointerdown',e=>{e.preventDefault();st.planet.setPointerCapture(e.pointerId);st.drag={startX:e.clientX,startY:e.clientY,moved:false};st.paused=true;st.planet.classList.remove('wobble');void st.planet.offsetWidth;st.planet.classList.add('wobble');});
+  st.planet.addEventListener('pointermove',e=>{if(!st.drag)return;const dx=e.clientX-st.drag.startX,dy=e.clientY-st.drag.startY;if(Math.hypot(dx,dy)>5)st.drag.moved=true;if(!st.drag.moved)return;const rect=st.slot.parentElement.getBoundingClientRect();const cx=rect.left+rect.width/2,cy=rect.top+rect.height/2;st.radius=Math.min(Math.max(35,Math.hypot(e.clientX-cx,e.clientY-cy)),Math.min(rect.width,rect.height)/2-20);st.angle=Math.atan2(e.clientY-cy,e.clientX-cx);});
+  st.planet.addEventListener('pointerup',e=>{if(!st.drag)return;const wasDrag=st.drag.moved;st.drag=null;st.paused=false;if(!wasDrag)viewPlanet(st.id);});
+  st.planet.addEventListener('pointercancel',()=>{st.drag=null;st.paused=false});
+}
+let lastT=performance.now();
+function animatePlanets(now){const dt=Math.min(0.05,(now-lastT)/1000);lastT=now;planetStates.forEach(st=>{if(!st.paused)st.angle+=st.speed*dt;st.slot.style.transform=`translate(${Math.cos(st.angle)*st.radius}px,${Math.sin(st.angle)*st.radius}px)`;});requestAnimationFrame(animatePlanets);}
+requestAnimationFrame(animatePlanets);
+
+function viewPlanet(id){const p=planets.find(x=>x.id===id);if(!p)return;openModal(`<div style="text-align:center"><div style="font-size:3.5rem;margin-bottom:8px">${p.emoji||'✨'}</div><h2 style="margin:6px 0;color:#fff">${safe(p.title)}</h2><p class="muted" style="white-space:pre-wrap;text-align:right;font-size:1rem;line-height:1.9;margin-top:12px">${safe(p.text)}</p><div class="formrow" style="justify-content:center;margin-top:16px"><button class="primary" id="editP">✎ تعديل</button><button class="smallBtn" id="delP">🗑 حذف</button><button class="ghost" data-close>إغلاق</button></div></div>`);$('#editP').onclick=()=>editPlanet(id);$('#delP').onclick=async()=>{if(confirm('تحذف هذا الكوكب؟')){await _supabase.from('planets').delete().eq('id', id);closeModal();toast('انحذف الكوكب')}};}
+
+function editPlanet(id){const p=id?planets.find(x=>x.id===id):{emoji:'✨',title:'',text:'',color:'#68e7ff'};openModal(`<h2>${id?'عدّل الكوكب':'أضف كوكبًا جديدًا'} 🪐</h2><label class="label">الرمز</label><input class="field" id="pEmoji" value="${safe(p.emoji)}" maxlength="4" placeholder="🪐 ✨ 💙"><label class="label">العنوان</label><input class="field" id="pTitle" value="${safe(p.title)}" maxlength="60" placeholder="مثلاً: أول لقاء"><label class="label">المحتوى</label><textarea class="field" id="pText" maxlength="500" placeholder="شنو تحب يظهر؟">${safe(p.text)}</textarea><label class="label">لون الكوكب</label><input class="field" id="pColor" type="color" value="${p.color||'#68e7ff'}" style="height:44px;padding:4px"><div class="formrow" style="margin-top:16px"><button class="primary" id="savePlanet">حفظ</button><button class="ghost" data-close>إلغاء</button></div>`);$('#savePlanet').onclick=async()=>{const item={id:id||('p_'+Date.now()),emoji:$('#pEmoji').value.trim()||'✨',title:$('#pTitle').value.trim()||'كوكب جديد',text:$('#pText').value.trim(),color:$('#pColor').value};if(id){await _supabase.from('planets').update(item).eq('id',id);}else{await _supabase.from('planets').insert([item]);}closeModal();toast(id?'تحدّث الكوكب ✨':'انضاف كوكب جديد 🪐')};}
+$('#addPlanetBtn').onclick=e=>{e.stopPropagation();editPlanet()};
+
+renderCosmos();addEventListener('resize',()=>{clearTimeout(window._rT);window._rT=setTimeout(renderCosmos,180)});
+
+function openModal(html){$('#modalContent').innerHTML=html;$('#modal').classList.add('show');$$('#modalContent [data-close]').forEach(b=>b.onclick=closeModal)}
+function closeModal(){$('#modal').classList.remove('show')}
+$('#modal').addEventListener('click',e=>{if(e.target===$('#modal'))closeModal()});
+addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+
+$('#surpriseBtn').onclick=()=>{const pool=[...planets.map(p=>({type:'planet',data:p})),...memories.map(m=>({type:'memory',data:m})),...messages.map(m=>({type:'message',data:m}))];if(!pool.length){toast('ماكو شي بالمجرّة بعد!');return}const pick=pool[Math.floor(Math.random()*pool.length)];if(pick.type==='planet'){viewPlanet(pick.data.id);return}if(pick.type==='memory'){const m=pick.data;openModal(`<div style="text-align:center"><div style="font-size:2.5rem">🎁✨</div><h2>مفاجأة من ذكرياتنا</h2>${m.image_url?`<img src="${m.image_url}" style="max-width:100%;border-radius:12px;margin:12px 0">`:`<div style="font-size:3rem;margin:12px 0">${m.emoji||'🌌'}</div>`}<h3>${safe(m.title)}</h3><p class="muted">${safe(m.note||'')}</p><p class="muted" style="font-size:.8rem">${safe(m.date||'')}</p><button class="primary" data-close style="margin-top:12px">تمام ✨</button></div>`);}else if(pick.type==='message'){const m=pick.data;openModal(`<div style="text-align:center"><div style="font-size:3rem">💌</div><h2>رسالة عشوائية</h2><p class="muted">${safe(m.sender||'من القلب')}</p><p style="line-height:1.9;white-space:pre-wrap;margin:16px 0">${safe(m.text)}</p><button class="primary" data-close>تمام ✨</button></div>`);}};
+
+$('#statsBtn').onclick=()=>{const totalHearts=memories.reduce((s,m)=>s+(m.hearts||0),0);const days=Math.max(0,Math.floor((Date.now()-new Date('2026-09-08T20:00:00+03:00').getTime())/86400000));openModal(`<h2 style="text-align:center">📊 إحصائياتنا</h2><div class="statsGrid"><div class="statItem"><div class="statNum">${planets.length}</div><div class="statLbl">🪐 كوكب</div></div><div class="statItem"><div class="statNum">${memories.length}</div><div class="statLbl">🌠 ذكرى</div></div><div class="statItem"><div class="statNum">${messages.length}</div><div class="statLbl">💌 رسالة</div></div><div class="statItem"><div class="statNum">${socials.length}</div><div class="statLbl">🌐 حساب</div></div><div class="statItem"><div class="statNum">${totalHearts}</div><div class="statLbl">❤️ قلب</div></div><div class="statItem"><div class="statNum">${days}</div><div class="statLbl">📅 يوم</div></div></div><div style="text-align:center;margin-top:16px"><button class="primary" data-close>تمام ✦</button></div>`);};
+
+$('#settingsBtn').onclick=()=>{const curTheme=store.get('theme','default');openModal(`<h2>⚙ إعدادات المجرّة</h2><label class="label">🎨 الثيم</label><div class="themePicker"><button data-theme="default" style="background:linear-gradient(135deg,#68e7ff,#ff78e5)" class="${curTheme==='default'?'active':''}"></button><button data-theme="rose" style="background:linear-gradient(135deg,#ffb3d9,#ff5c94)" class="${curTheme==='rose'?'active':''}"></button><button data-theme="gold" style="background:linear-gradient(135deg,#ffe9a8,#ffb700)" class="${curTheme==='gold'?'active':''}"></button><button data-theme="emerald" style="background:linear-gradient(135deg,#7effd5,#20c997)" class="${curTheme==='emerald'?'active':''}"></button></div><label class="label">🖼️ صورة خلفية الهيرو (مشتركة)</label><input class="field" id="heroBgInput" type="file" accept="image/*"><button class="smallBtn" id="clearHeroBg" style="margin-top:6px">إزالة الصورة</button><div style="display:grid;gap:9px;margin-top:18px"><button class="primary" id="backupBtn">⬇ نسخ احتياطي كامل</button><label class="ghost" style="text-align:center;border-radius:14px;padding:12px;border:1px solid #4e5898;cursor:pointer">⬆ استرجاع من ملف<input type="file" id="restoreFile" accept="application/json" hidden></label><button class="ghost" data-close>إغلاق</button></div>`);$$('[data-theme]').forEach(b=>b.onclick=()=>{applyTheme(b.dataset.theme);$$('[data-theme]').forEach(x=>x.classList.toggle('active',x===b))});$('#heroBgInput').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const reader = new FileReader(); reader.onload=async(ev)=>{await saveSetting('heroBg', ev.target.result);toast('تم حفظ الخلفية للطرفين 🖼️')}; reader.readAsDataURL(f);}catch{toast('تعذّر المعالجة')}};$('#clearHeroBg').onclick=async()=>{await _supabase.from('settings').delete().eq('id', 'heroBg');toast('انحذفت الصورة')};$('#backupBtn').onclick=()=>{const data={planets:planets, socials:socials};const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`bz-backup.json`;a.click();URL.revokeObjectURL(url);toast('تم التنزيل ⬇');};$('#restoreFile').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const d=JSON.parse(await f.text());if(d.planets){await _supabase.from('planets').insert(d.planets);}if(d.socials){await _supabase.from('socials').insert(d.socials);}closeModal();toast('تم الاسترجاع ✨')}catch{toast('الملف غير صالح')}};};
+
+function memoryMatches(m,q){if(!q)return true;q=q.toLowerCase();return (m.title||'').toLowerCase().includes(q)||(m.note||'').toLowerCase().includes(q)||(m.date||'').includes(q)}
+function renderMemories(){const q = currentMemSearch;$('#gallery').innerHTML=memories.map((m)=>{if(!memoryMatches(m,q))return '';const imgUrl = m.image_url || m.image;const style=imgUrl?`background-image:linear-gradient(#05071b22,#05071b66),url('${imgUrl}');`:'';return `<article class="memory" style="position:relative;"><div class="memoryArt ${imgUrl?'hasImg':''}" style="${style}" ${imgUrl?`data-lightbox="${imgUrl}"`:''}>${imgUrl?'':(m.emoji||'🌌')}</div><button class="dotsBtn" data-menu="${m.id}" style="position:absolute; top:10px; left:10px; background:rgba(0,0,0,0.5); border-radius:50%; width:30px; height:30px; z-index:5;">⋮</button><div class="memoryBody"><h3>${safe(m.title)}</h3><div class="muted">${safe(m.date||'')}</div>${m.note?`<p class="muted" style="display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;">${safe(m.note)}</p>`:''}<div class="memoryActions"><button class="heartBtn ${m.liked?'liked':''}" data-heart="${m.id}">❤️ ${m.hearts||0}</button></div></div></article>`}).join('');$('#galleryEmpty').classList.toggle('hidden',memories.length>0);$$('[data-heart]').forEach(b=>b.onclick=async e=>{e.stopPropagation();const id=b.dataset.heart;const m=memories.find(x=>x.id==id);const newLiked = !m.liked;const newHearts = Math.max(0,(m.hearts||0)+(newLiked?1:-1));m.liked=newLiked; m.hearts=newHearts; renderMemories();const { error } = await _supabase.from('memories').update({ liked: newLiked, hearts: newHearts }).eq('id', id);if(error) { toast('حدث خطأ في المزامنة'); loadMemories(); }});$$('[data-menu]').forEach(b=>b.onclick=(e)=>{e.stopPropagation();const id=b.dataset.menu;const m=memories.find(x=>x.id==id);openActionMenu('خيارات الذكرى', [{id:'mCopy', icon:'📋', label:'نسخ النص', action:()=>{const textToCopy = `${m.title}\n${m.date||''}\n${m.note||''}`.trim();navigator.clipboard.writeText(textToCopy).then(()=>toast('تم نسخ النص 📋')).catch(()=>toast('فشل النسخ'));}},{id:'mEdit', icon:'✎', label:'تعديل الذكرى', action:()=>memoryForm(id)},{id:'mDelete', icon:'🗑', label:'حذف الذكرى', danger:true, action:async()=>{if(confirm('هل أنت متأكد من حذف هذه الذكرى نهائياً؟')){await _supabase.from('memories').delete().eq('id', id);loadMemories(); toast('انحذفت الذكرى');}}}]);});$$('[data-lightbox]').forEach(el=>el.onclick=()=>window.open(el.dataset.lightbox, '_blank'));}
+
+$('#searchMemoryBtn').onclick=()=>{openModal(`<h2>🔍 بحث في الذكريات</h2><input class="field" id="modalSearchInput" placeholder="اكتب كلمة للبحث..." value="${safe(currentMemSearch)}" style="margin-bottom:16px;"><div id="modalSearchResults" class="msgList" style="max-height:250px;overflow-y:auto;margin-bottom:16px;"></div><div class="formrow" style="justify-content:space-between;"><button class="smallBtn" id="clearSearchBtn">مسح البحث</button><div style="display:flex;gap:8px;"><button class="ghost" data-close>إلغاء</button><button class="primary" id="applySearchBtn">تطبيق البحث ✦</button></div></div>`);const input = $('#modalSearchInput'), resultsContainer = $('#modalSearchResults');const updateResults = (query) => {const q = query.trim().toLowerCase();if(!q) { resultsContainer.innerHTML = '<p class="muted" style="text-align:center;">اكتب شيئاً للبحث...</p>'; return; }const matches = memories.filter(m => (m.title||'').toLowerCase().includes(q) || (m.note||'').toLowerCase().includes(q) || (m.date||'').includes(q));if(matches.length === 0) resultsContainer.innerHTML = '<p class="muted" style="text-align:center;">لا توجد نتائج مطابقة.</p>';else resultsContainer.innerHTML = matches.map(m => `<div style="padding:10px;border:1px solid var(--line);border-radius:10px;background:#070b20;margin-bottom:8px;"><div style="display:flex;justify-content:space-between;align-items:center;"><b>${safe(m.title)}</b><span style="font-size:0.75rem;color:var(--muted);">${safe(m.date||'')}</span></div>${m.note ? `<div class="muted" style="font-size:0.8rem;margin-top:4px;">${safe(m.note)}</div>` : ''}</div>`).join('');};input.addEventListener('input', (e) => updateResults(e.target.value));updateResults(currentMemSearch);$('#clearSearchBtn').onclick = () => { input.value = ''; updateResults(''); };$('#applySearchBtn').onclick = () => { currentMemSearch = input.value.trim(); renderMemories(); closeModal(); $('#memories').scrollIntoView({behavior:'smooth'}); };};
+
+function memoryForm(id){const isEdit = id ? true : false;const m = isEdit ? memories.find(x=>x.id==id) : {title:'',date:new Date().toISOString().slice(0,10),note:'',emoji:'🌌',hearts:0,liked:false};openModal(`<h2>${isEdit?'عدّل الذكرى':'أضف ذكرى جديدة'} ✦</h2><label class="label">عنوان الذكرى</label><input class="field" id="mTitle" maxlength="70" placeholder="مثلاً: أول لقاء" value="${safe(m.title)}"><label class="label">التاريخ (يمكنك إزالته بمسحه)</label><input class="field" id="mDate" type="date" value="${safe(m.date)}"><label class="label">تفاصيل صغيرة</label><textarea class="field" id="mNote" maxlength="1000" placeholder="شنو تحب تتذكر؟">${safe(m.note)}</textarea><label class="label">${isEdit ? 'تغيير الصورة (اتركها فارغة للاحتفاظ بالحالية)' : 'صورة من جهازك (اختياري، بحد 10MB)'}</label><input class="field" id="mImage" type="file" accept="image/*"><label class="label">رمز الذكرى</label><select class="field" id="mEmoji">${['🌌','🌷','🌙','💜','✨','🪐','💌','🎂','🎁','🌹','☕','🎬'].map(e=>`<option>${e}</option>`).join('')}</select><div class="formrow"><button class="primary" id="saveMemory">حفظ</button><button class="ghost" data-close>إلغاء</button></div>`);$('#mEmoji').value=m.emoji||'🌌';$('#saveMemory').onclick=async()=>{const title=$('#mTitle').value.trim();if(!title){toast('اكتب عنوانًا');return}let imageUrl = m.image_url || m.image || '';const file = $('#mImage').files[0];const saveBtn = $('#saveMemory');const originalText = saveBtn.textContent;saveBtn.disabled = true;if(file){if(file.size > 10*1024*1024){ toast('الصورة أكبر من 10MB؛ اختر صورة أصغر'); saveBtn.disabled=false; return; }saveBtn.textContent = 'جاري رفع الصورة... ⏳';try {imageUrl = await uploadToImgbb(file);toast('تم رفع الصورة ✨');} catch (err) {toast('فشل الرفع: ' + err.message);saveBtn.textContent = originalText;saveBtn.disabled = false;return;}}saveBtn.textContent = 'جاري الحفظ... ⏳';const payload = { title, date: $('#mDate').value, note: $('#mNote').value.trim(), emoji: $('#mEmoji').value, image_url: imageUrl, hearts: m.hearts || 0, liked: m.liked || false };let error;if(isEdit) {const res = await _supabase.from('memories').update(payload).eq('id', id);error = res.error;} else {const res = await _supabase.from('memories').insert([payload]);error = res.error;}saveBtn.disabled = false;saveBtn.textContent = originalText;if(error) { toast('حدث خطأ: ' + error.message); }else { closeModal(); toast(isEdit?'تم التحديث ✨':'انحفظت الذكرى ✨'); }};}
+
+$('#addMemoryBtn').onclick=()=>memoryForm();
+
+function renderMessages(){$('#messageList').innerHTML=messages.map((m)=>`<article class="message"><div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><b>💌 ${safe(m.sender||'من القلب')}</b><div style="display:flex;gap:5px"><button class="smallBtn" data-editmsg="${m.id}">تعديل</button><button class="smallBtn" data-delmsg="${m.id}">حذف</button></div></div><p>${safe(m.text)}</p><small>${new Date(m.created_at).toLocaleString('ar-IQ')}</small></article>`).join('');$('#messagesEmpty').classList.toggle('hidden',messages.length>0);$$('[data-delmsg]').forEach(b=>b.onclick=async ()=>{if(confirm('تحذف الرسالة؟')){await _supabase.from('messages').delete().eq('id', b.dataset.delmsg);loadMessages();}});$$('[data-editmsg]').forEach(b=>b.onclick=()=>{const m=messages.find(x=>x.id==b.dataset.editmsg);openModal(`<h2>عدّل الرسالة</h2><label class="label">النص</label><textarea class="field" id="eText">${safe(m.text)}</textarea><label class="label">المرسل</label><input class="field" id="eFrom" value="${safe(m.sender||'')}"><div class="formrow"><button class="primary" id="saveEdit">حفظ</button><button class="ghost" data-close>إلغاء</button></div>`);$('#saveEdit').onclick=async()=>{const text=$('#eText').value.trim();if(!text){toast('الرسالة فارغة');return}const sender = $('#eFrom').value.trim();await _supabase.from('messages').update({text, sender}).eq('id', m.id);closeModal(); toast('تحدّثت ✨'); loadMessages();};});}
+$('#sendMessage').onclick=async()=>{const text=$('#messageText').value.trim();if(!text){toast('اكتب الرسالة أولًا');return}const sender=$('#messageFrom').value.trim();const btn = $('#sendMessage'); btn.disabled=true; btn.textContent='جاري الإرسال... ⏳';const { error } = await _supabase.from('messages').insert([{text, sender}]);btn.disabled=false; btn.textContent='أرسلها للمجرّة ✦';if(error) toast('خطأ في الإرسال: '+error.message);else { $('#messageText').value=''; toast('وصلت رسالتك 💌'); loadMessages(); }};
+
+const PLATFORMS = {
+  instagram: { name: 'Instagram', bg: 'linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)', svg: '<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>' },
+  telegram: { name: 'Telegram', bg: 'linear-gradient(135deg, #2AABEE, #229ED9)', svg: '<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="white"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>' },
+  whatsapp: { name: 'WhatsApp', bg: 'linear-gradient(135deg, #25D366, #128C7E)', svg: '<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>' },
+  tiktok: { name: 'TikTok', bg: 'linear-gradient(135deg, #000000, #25F4EE, #FE2C55)', svg: '<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="white"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>' },
+  facebook: { name: 'Facebook', bg: 'linear-gradient(135deg, #1877F2, #0E5CC4)', svg: '<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="white"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>' },
+  twitter: { name: 'X', bg: 'linear-gradient(135deg, #1a1a1a, #333)', svg: '<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="white"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>' }
+};
+function detectPlatform(url,name){const s=((url||'')+' '+(name||'')).toLowerCase();if(s.includes('instagram')||s.includes('insta'))return'instagram';if(s.includes('t.me')||s.includes('telegram'))return'telegram';if(s.includes('wa.me')||s.includes('whatsapp')||s.includes('whats'))return'whatsapp';if(s.includes('facebook')||s.includes('fb.com')||s.includes('fb.me'))return'facebook';if(s.includes('twitter')||s.includes('x.com'))return'twitter';if(s.includes('tiktok'))return'tiktok';return'website'}
+
+function renderSocials(){$('#socialList').innerHTML=socials.map((s)=>{const key=detectPlatform(s.url,s.name);const pl=PLATFORMS[key]||PLATFORMS.instagram;const display=s.name||pl.name;return `<a href="${safe(s.url)}" target="_blank" rel="noopener noreferrer" class="social"><div class="socialIcon" style="background:${pl.bg}">${pl.svg}</div><div class="socialInfo"><b>${safe(display)}</b><span class="muted">${safe(s.handle||pl.name)}</span></div><div class="socialAction">↗</div><button class="del-social" data-delsocial="${s.id}">✕</button></a>`}).join('');$('#socialEmpty').classList.toggle('hidden',socials.length>0);$$('[data-delsocial]').forEach(b=>b.onclick=async(e)=>{e.preventDefault();e.stopPropagation();if(confirm('حذف هذا الحساب؟')) {await _supabase.from('socials').delete().eq('id', b.dataset.delsocial);loadSocials();}});}
+$('#addSocialBtn').onclick=()=>{openModal(`<h2>أضف حسابًا 🌐</h2><label class="label">الرابط</label><input class="field" id="sUrl" type="url" placeholder="https://instagram.com/username"><label class="label">اسم المنصة (اختياري)</label><input class="field" id="sName" placeholder="Instagram / Telegram…"><label class="label">اسم المستخدم / الوصف</label><input class="field" id="sHandle" placeholder="@username"><div class="socialPreview" id="sPreview"><div class="socialIcon" style="background:${PLATFORMS.instagram.bg}">${PLATFORMS.instagram.svg}</div><div style="flex:1"><b>سيتم اكتشاف المنصة تلقائيًا</b><div class="muted" style="font-size:.8rem">اكتب الرابط لتظهر الأيقونة</div></div></div><div class="formrow" style="margin-top:16px"><button class="primary" id="saveSocial">حفظ</button><button class="ghost" data-close>إلغاء</button></div>`);const upd=()=>{const key=detectPlatform($('#sUrl').value,$('#sName').value);const pl=PLATFORMS[key]||PLATFORMS.instagram;$('#sPreview').innerHTML=`<div class="socialIcon" style="background:${pl.bg}">${pl.svg}</div><div style="flex:1"><b>${pl.name}</b><div class="muted" style="font-size:.8rem">ستظهر بهذه الأيقونة</div></div>`};$('#sUrl').addEventListener('input',upd);$('#sName').addEventListener('input',upd);$('#saveSocial').onclick=async()=>{const url=$('#sUrl').value.trim();if(!/^https?:\/\//i.test(url)){toast('اكتب رابطًا يبدأ بـ https://');return}const key=detectPlatform(url,$('#sName').value);const pl=PLATFORMS[key]||PLATFORMS.instagram;const name=$('#sName').value.trim()||pl.name;const btn=$('#saveSocial'); btn.disabled=true; btn.textContent='جاري الحفظ...';const { error } = await _supabase.from('socials').insert([{ name, url, handle: $('#sHandle').value.trim() }]);btn.disabled=false; btn.textContent='حفظ';if(error) toast('خطأ: '+error.message);else { closeModal(); toast('انضاف الحساب 🌐'); loadSocials(); }};};
+renderSocials();
+
+function renderPlaylist(){const list=$('#playlist');if(!tracks.length){list.innerHTML='<p class="muted" style="text-align:center;font-size:.8rem;margin:6px 0">ماكو مقاطع بعد</p>';return}list.innerHTML=tracks.map((t,i)=>`<div class="trackRow ${i===currentTrack?'active':''}" data-track="${i}"><span class="trackPlayIcon">${i===currentTrack?'▶':'♪'}</span><div class="trackInfo"><span class="trackName">${safe(t.name)}</span>${t.description ? `<span class="trackDesc">${safe(t.description)}</span>` : ''}</div><button class="dotsBtn" data-trackmenu="${i}">⋮</button></div>`).join('');$$('[data-track]').forEach(row=>row.onclick=e=>{if(e.target.closest('[data-trackmenu]'))return;playTrack(+row.dataset.track);});$$('[data-trackmenu]').forEach(b=>b.onclick=e=>{e.stopPropagation();const i=+b.dataset.trackmenu;const t=tracks[i];openActionMenu('خيارات المقطع', [{id:'tEdit', icon:'✎', label:'تعديل المعلومات', action:()=>editTrackForm(i)},{id:'tDelete', icon:'🗑', label:'حذف المقطع', danger:true, action:async()=>{if(confirm('هل أنت متأكد من حذف هذا المقطع؟')) {if(t.id) await _supabase.from('tracks').delete().eq('id', t.id);try {const path = t.url.split('/audio/')[1];if(path) await _supabase.storage.from('audio').remove([path]);} catch(err) { console.log("Storage delete error:", err); }if(i===currentTrack){currentTrack=-1;$('#audioPlayer').pause();$('#audioTitle').textContent='لحن زهرتي'}else if(i<currentTrack)currentTrack--;loadTracks(); toast('انحذف المقطع');}}}]);});}
+function playTrack(i){if(i<0||i>=tracks.length)return;currentTrack=i;$('#audioPlayer').src=tracks[i].url;$('#audioTitle').textContent=tracks[i].name;$('#audioPlayer').play().catch(()=>{});renderPlaylist()}
+
+function editTrackForm(index) {const t = tracks[index];openModal(`<h2>تعديل المقطع الصوتي</h2><label class="label">عنوان المقطع</label><input class="field" id="tName" value="${safe(t.name)}"><label class="label">وصف المقطع (اختياري)</label><input class="field" id="tDesc" value="${safe(t.description||'')}"><label class="label">استبدال الملف الصوتي (اتركه فارغاً للاحتفاظ بالحالي)</label><input class="field" id="tFile" type="file" accept="audio/*"><div class="formrow"><button class="primary" id="saveTrack">حفظ</button><button class="ghost" data-close>إلغاء</button></div>`);$('#saveTrack').onclick = async () => {const newName = $('#tName').value.trim();const newDesc = $('#tDesc').value.trim();if(!newName) { toast('اكتب اسم المقطع'); return; }const file = $('#tFile').files[0];const btn = $('#saveTrack');const orig = btn.textContent;btn.disabled = true;let newUrl = t.url;if(file) {if(file.size > 5*1024*1024) { toast('الملف أكبر من 5MB'); btn.disabled=false; return; }btn.textContent = 'جاري رفع الملف الجديد... ⏳';try {try {const oldPath = t.url.split('/audio/')[1];if(oldPath) await _supabase.storage.from('audio').remove([oldPath]);} catch(err) { console.log('Error deleting old', err); }const uploaded = await uploadToSupabaseStorage(file);newUrl = uploaded.url;} catch(err) {toast('فشل الرفع: ' + err.message);btn.disabled = false; btn.textContent = orig; return;}}btn.textContent = 'جاري الحفظ... ⏳';const { error } = await _supabase.from('tracks').update({ name: newName, description: newDesc, url: newUrl }).eq('id', t.id);btn.disabled = false; btn.textContent = orig;if(error) toast('خطأ: '+error.message);else { closeModal(); toast('تم تحديث المقطع ✨'); loadTracks(); }};}
+
+$('#audioFile').onchange=async e=>{const files=[...e.target.files];const label = e.target.parentElement;const originalText = label.innerHTML;for(let i=0; i<files.length; i++) {const f = files[i];if(f.size > 5*1024*1024){ toast(`${f.name} أكبر من 5MB (الحد الأقصى لـ Supabase)`); continue; }label.innerHTML = `جاري رفع ${i+1} من ${files.length}... ⏳`;try {const { url, name } = await uploadToSupabaseStorage(f);await _supabase.from('tracks').insert([{ name, url, description: '' }]);toast(`تم رفع ${name} بنجاح 🎶`);} catch(err) {toast(`فشل رفع ${f.name}: ${err.message}`);}}e.target.value='';label.innerHTML = originalText;loadTracks();};
+
+$('#clearTracksBtn').onclick=async()=>{if(!tracks.length)return;if(!confirm('هل تريد حذف كل المقاطع نهائياً؟'))return;const { error } = await _supabase.from('tracks').delete().neq('id', 0);try {const { data: files } = await _supabase.storage.from('audio').list();if(files && files.length > 0) {const paths = files.map(f => f.name);await _supabase.storage.from('audio').remove(paths);}} catch(e) { console.log(e); }tracks=[];currentTrack=-1;$('#audioPlayer').pause();$('#audioPlayer').src='';$('#audioTitle').textContent='لحن زهرتي';loadTracks();};
+
+$('#audioPlayer').onplay=()=>$('#audioDisc').classList.remove('paused');
+$('#audioPlayer').onpause=()=>$('#audioDisc').classList.add('paused');
+$('#audioPlayer').onended=()=>{if(tracks.length&&currentTrack<tracks.length-1)playTrack(currentTrack+1)};
+
+$$('.nav button').forEach(b=>b.onclick=()=>{const t=b.dataset.target;$('#'+t)?.scrollIntoView({behavior:'smooth'});$$('.nav button').forEach(x=>x.classList.toggle('active',x===b))});
+const sections=['home','moments','memories','letters','music','accounts'].map(id=>document.getElementById(id)).filter(Boolean);
+addEventListener('scroll',()=>{const y=scrollY+150;let active='home';sections.forEach(s=>{if(s.offsetTop<=y)active=s.id});$$('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.target===active));const max=document.documentElement.scrollHeight-innerHeight;if (max > 0) $('#progressBar').style.width=(scrollY/max*100)+'%';},{passive:true});
+
+function toast(msg) {const t = $('#toast');if (!t) return;t.textContent = msg;t.classList.add('show');clearTimeout(window._toastT);window._toastT = setTimeout(() => t.classList.remove('show'), 2600);}
+
+// التشغيل
+loadPlanets();
+loadSettings();
+loadMemories(); 
+loadMessages(); 
+loadTracks(); 
+loadSocials(); 
+initRealtime();
+
+})();
+</script>
+</body>
+</html>
