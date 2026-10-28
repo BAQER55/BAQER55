@@ -239,6 +239,9 @@ textarea.field{width:100%;resize:vertical;min-height:90px}
 .solarOrbit.o-neptune { width: 96%; height: 96%; animation-duration: 66s; animation-direction: reverse; }
 .o-neptune .solarPlanet { width: 17px; height: 17px; background: radial-gradient(circle at 30% 25%, #a9c9ff, #3157db 65%, #141f72); }
 @keyframes solarSpin { from { transform: translate3d(-50%, -50%, 0) rotate(-18deg); } to { transform: translate3d(-50%, -50%, 0) rotate(342deg); } }
+/* Floating Heart Animation */
+.floating-heart { position: fixed; font-size: 2.5rem; pointer-events: none; z-index: 9999; animation: floatUp 2.5s ease-out forwards; }
+@keyframes floatUp { 0% { transform: translateY(0) scale(1); opacity: 1; } 100% { transform: translateY(-150px) scale(1.5); opacity: 0; } }
 @media (max-width: 800px) {
   .topbar { flex-wrap: wrap; justify-content: center; }
   .nav { order: 3; justify-content: center; width: 100%; }
@@ -418,7 +421,7 @@ textarea.field{width:100%;resize:vertical;min-height:90px}
   </div>
 </section>
 <section class="section" id="letter">
-  <div class="sectionHead"><div><h2>✨ إلى نجمتي… وإلى زهرتي</h2><p>كلمات من باقر</p></div></div>
+  <div class="sectionHead"><div><h2>✨ إلى نجمتي… إلى زهرتي</h2><p>كلمات من باقر</p></div></div>
   <div class="quote">
     <p>وسط زحام الأكوان، حيث تضيء النجوم بعيداً في الآفاق، هناك <span class="highlight">نجمةٌ اختارت أن تسكن قلبي</span> وتشرق في عتمة أيامي. وحدكِ من تملكين القدرة على إضفاء طعم آخر للوقت، حتى أظن أن العادي بوجودكِ يغدو استثنائياً، وأن أيسر اللحظات تصير عيداً.</p>
     <p>لا أريد من الزمن عوداً ولا وعوداً كبرى، جل ما أتمناه أن تبقى تفاصيلنا العذبة منارةً لا تُطفأ، وأن يبقى لكل كلمة صادقة مكانها الأمين في الذاكرة. فكلما ضاق بنا طريق، رجعنا إلى تلك اللحظة الجميلة لنتذكر شكد كانت حلوة، وكيف كانت تليق بنا.</p>
@@ -517,6 +520,18 @@ function burst(x, y) {
   }
 }
 
+// ✅ دالة إضافة القلب الطائر
+function showFloatingHeart(sender) {
+  const el = document.createElement('div');
+  el.className = 'floating-heart';
+  el.textContent = sender === 'باقر' ? '💙' : '💖';
+  el.style.left = (20 + Math.random() * 60) + 'vw';
+  el.style.bottom = '20vh';
+  el.style.filter = sender === 'باقر' ? 'drop-shadow(0 0 10px #68e7ff)' : 'drop-shadow(0 0 10px #ff78e5)';
+  document.body.appendChild(el);
+  setTimeout(() => { try { el.remove(); } catch(e){} }, 2500);
+}
+
 const starPoems = [
   "أنتِ نجمة في سماء قلبي، لا تغيب أبداً ✨",
   "كل النجوم في الكون لا تساوي لمعة عيونك 💫",
@@ -547,7 +562,6 @@ const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
 const IMGBB_API_KEY = 'f504dffeaeadffeb24b5dd1ee4e5a24d';
 const IMGBB_ENDPOINT = 'https://api.imgbb.com/1/upload';
 
-// المتغيرات
 let planets = [];
 let memories = []; 
 let messages = []; 
@@ -557,7 +571,6 @@ let currentTrack = -1;
 let currentMemSearch = ''; 
 let selectedSender = localStorage.getItem('bz_my_name') || 'باقر';
 
-// دوال تحميل البيانات من السيرفر
 async function loadPlanets() {
   const { data, error } = await _supabase.from('planets').select('*').order('created_at', { ascending: true });
   if (!error) {
@@ -579,7 +592,6 @@ async function saveSetting(key, value) {
   await _supabase.from('settings').upsert({ id: key, value: value });
 }
 
-// الاستماع للتحديثات المباشرة (Realtime) لكل شيء
 function initRealtime() {
   // الهمسات
   _supabase.channel('whispers_channel').on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'star_whispers' }, (payload) => {
@@ -589,7 +601,7 @@ function initRealtime() {
     }
   }).subscribe();
 
-  // الذكريات (الصور)
+  // الذكريات
   _supabase.channel('memories_channel').on('postgres_changes', { event: '*', schema: 'public', table: 'memories' }, () => {
     loadMemories();
   }).subscribe();
@@ -599,9 +611,15 @@ function initRealtime() {
     loadPlanets();
   }).subscribe();
 
-  // الإعدادات (الخلفية)
+  // الإعدادات
   _supabase.channel('settings_channel').on('postgres_changes', { event: '*', schema: 'public', table: 'settings' }, () => {
     loadSettings();
+  }).subscribe();
+
+  // ✅ استماع القلوب
+  _supabase.channel('hearts_channel').on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'hearts' }, (payload) => {
+    const newHeart = payload.new;
+    showFloatingHeart(newHeart.sender);
   }).subscribe();
 
   console.log('✅ Realtime Connected');
@@ -888,11 +906,16 @@ function onSolarPlanetEvent(e) {
 }
 document.addEventListener('pointerdown', onSolarPlanetEvent);
 
-document.addEventListener('pointerdown', e => {
+// ✅ تعديل زر الشمس لإضافة القلب المشترك
+document.addEventListener('pointerdown', async e => {
   const sun = e.target.closest('#sunPlanet');
   if (sun) {
     e.preventDefault(); e.stopPropagation();
     try { burst(e.clientX || innerWidth/2, e.clientY || innerHeight/2); } catch(err) {}
+    
+    // إرسال القلب لقاعدة البيانات
+    await _supabase.from('hearts').insert([{ sender: selectedSender }]);
+
     openModal(`<div style="text-align:center"><div style="font-size:3.5rem; animation:heartBeat 1.5s infinite; display:inline-block; margin-bottom:10px">💖</div><h2 style="margin:6px 0;color:var(--pink)">همسة إلى روح السيد</h2><p style="text-align:center;line-height:1.9;font-size:1.1rem;font-weight:600;min-height:80px;display:flex;align-items:center;justify-content:center;padding:0 10px;color:#fff">${heartMessages[heartMsgIndex]}</p><div class="formrow" style="justify-content:center;margin-top:16px"><button class="primary" id="nextHeartMsg">كلمة أجمل 💖</button><button class="ghost" data-close>تمام ✦</button></div></div>`);
     $('#nextHeartMsg').onclick = () => { heartMsgIndex = (heartMsgIndex + 1) % heartMessages.length; const p = $('#modalContent').querySelector('p'); if (p) p.textContent = heartMessages[heartMsgIndex]; try { burst(innerWidth/2, innerHeight/2); } catch(err) {} };
   }
